@@ -17,6 +17,8 @@
   },
   "homepage": "https://github.com/alexo12/greenfield#readme",
   "dependencies": {
+    "ejs": "^2.6.2",
+    "eslint": "^6.0.1",
     "express": "^4.17.1"
   }
 }
