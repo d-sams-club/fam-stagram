@@ -4,6 +4,7 @@
   "description": "d-sams-club greenfield project",
   "main": "index.js",
   "scripts": {
+    "start": "node server/index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -18,6 +19,12 @@
   "homepage": "https://github.com/alexo12/greenfield#readme",
   "dependencies": {
     "express": "^4.17.1",
+<<<<<<< HEAD
     "mysql": "^2.17.1"
+=======
+    "mysql": "^2.17.1",
+    "mysql2": "^1.6.5",
+    "sequelize": "^5.10.1"
+>>>>>>> b9104788d7dc0c3ff85eab57e5b3b03bb03ed26d
   }
 }
