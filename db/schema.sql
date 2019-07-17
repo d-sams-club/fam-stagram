@@ -35,3 +35,17 @@ CREATE TABLE families (
   FOREIGN KEY (userId) REFERENCES users(id)
  );
 
+ CREATE TABLE reactions (
+  id int NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  name varchar(255)
+ );
+
+ CREATE TABLE reactionPhotos (
+  id int NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  photoId int,
+  reactionId int,
+  FOREIGN KEY (photoId) REFERENCES photos(id),
+  FOREIGN KEY (reactionId) REFERENCES reactions(id)
+ );
+
+
