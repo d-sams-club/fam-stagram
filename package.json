@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/alexo12/greenfield#readme",
   "dependencies": {
-    "express": "^4.17.1"
+    "express": "^4.17.1",
+    "mysql": "^2.17.1"
   }
 }
