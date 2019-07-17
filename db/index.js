@@ -18,7 +18,6 @@ getAllMessages = (callback) => {
       callback(err, null);
       return;
     }
-      console.log(result);
       callback(null, result);
   });
 }
