@@ -11,7 +11,15 @@ app.use(bodyParser.urlencoded({
 app.use(express.static(__dirname+ '/../client/'))
 app.use(bodyParser.json());
 
-// route/page loading:
+// will handle all authenticating in server
+// domain: dev-sn985q6v.auth0.com
+// client id: EhZnOVZG6gBJZvh0tRLL5mSJVUAMFMb2
+// client secret: my7ovaY3uSVSYDrE4K0VRJanVqf208kP356mxy5qSQT2BORh
+
+
+///////////////////////////////////////////////////////////////////
+// ROUTE/PAGE LOADING:
+///////////////////////////////////////////////////////////////////
 
 // the home page with the join family, create family, and logout
 app.get('/', (req, res) => {
@@ -37,8 +45,14 @@ app.get('/chats', (req, res) => {
   // once front end people give me a file for the chats page i will be able to render it
   // --> res.render('templates/chats')
 });
+///////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////
 
-// request handling
+
+
+///////////////////////////////////////////////////////////////////
+// REQUEST HANDLING
+///////////////////////////////////////////////////////////////////
 app.post('/message', (req, res) => {
   // need the insert query function from the db
   /**
@@ -78,7 +92,8 @@ app.post('/photo', (req, res) => {
 app.get('/photos', (req, res) => {
     // need to see how we will be going about posting and getting the photos first
 });
-
+///////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////
 
 
 
