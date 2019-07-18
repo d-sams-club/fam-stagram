@@ -9,15 +9,17 @@ const database = require('../db/index.js');
 app.use(bodyParser.urlencoded({
   extended: true,
 }));
-app.use(express.static(__dirname + '/../client/'));
+app.use(express.static(`${__dirname}/../client/`));
 app.use(bodyParser.json());
 
 app.get('/', (req, res) => {
   res.render('index');
   res.statusCode = 200;
 });
+
 app.post('/messages', (req, res) => {
-  database.save(req.body);
+  database.saveMessage(req.body);
+
   res.sendStatus(200);
 });
 
@@ -27,6 +29,11 @@ app.get('/messages', (req, res) => {
       res.statusCode = 200;
       res.send(results);
     });
+});
+
+app.post('/users', (req, res) => {
+  database.saveUser(req.body);
+  res.sendStatus(200);
 });
 
 app.listen(PORT, () => {
