@@ -1,10 +1,13 @@
-var express = require('express');
-var secured = require('../middleware/secured');
-var router = express.Router();
+const express = require('express');
+const secured = require('../middleware/secured');
+const path = require('path');
+const router = express.Router();
+
+const indexPath = path.join(__dirname, '../../client/index.html');
 
 router.get('/user', secured(), function (req, res, next) {
   const { _raw, _json, ...userProfile } = req.user;
-  res.render('user', {
+  res.sendFile(indexPath, {
     userProfile: JSON.stringify(userProfile, null, 2),
     title: 'Profile page'
   });
