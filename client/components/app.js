@@ -1,5 +1,12 @@
-const app = angular.module('app', [])
-  .component('app', {
+const app = angular.module('app', ['ngRoute'])
+  .component('home', {
+    controller() {
+
+    },
+    templateUrl: 'templates/home.html',
+  })
+
+  .component('chat', {
     controller($http) {
       this.messages = [];
       this.handleSendClick = (value) => {
@@ -32,5 +39,29 @@ const app = angular.module('app', [])
       };
       this.init();
     },
-    templateUrl: 'templates/app.html',
-  });
+    templateUrl: 'templates/chat.html',
+  })
+  .component('photos', {
+    controller() {
+
+    },
+    templateUrl: 'templates/photos.html',
+  })
+  .config(['$routeProvider',
+    function config($routeProvider) {
+      $routeProvider
+        .when('/', {
+          template: '<home></home>',
+        })
+        .when('/chat', {
+          template: '<chat><chat>',
+        })
+        .when('/photos', {
+          template: '<photos></photos>',
+        })
+        .when('/', {
+          template: '<home></home>',
+        })
+        .otherwise('/login');
+    },
+  ]);
