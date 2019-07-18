@@ -1,0 +1,17 @@
+<h1>Chat</h1>
+<div class="nav">
+    <a class="active" href="/">Home</a>
+    <a href="/#!/chat">Chat</a>
+    <a href="/#!/photos">Photos</a>
+  </div>
+<div style="width: 600px; height: 500px; overflow:scroll;">
+  <div ng-Repeat="obj in $ctrl.messages" >
+    <div> 
+      <ul>
+        <li>{{obj.name}}: {{obj.text}}</li>
+      </ul>
+    </div>
+  </div>
+</div>
+<input type="text" placeholder="Send Message.." ng-model="value"> 
+<button ng-click="$ctrl.handleSendClick(value)">Send</button>

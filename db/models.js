@@ -105,11 +105,4 @@ const ReactionPhoto = db.define('reactionPhoto', {
     allowNull: false,
   },
 });
-
-
-//   db.query('CREATE DATABASE IF NOT EXISTS famstagram;')
-// .then(() => console.log('Database created'))
-// .catch((error) => console.log(`There was an error creating the database`, error))
-
-
 module.exports = db;
