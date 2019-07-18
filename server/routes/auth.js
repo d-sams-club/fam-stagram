@@ -42,12 +42,12 @@ router.get('/callback', function (req, res, next) {
 router.get('/logout', (req, res) => {
   req.logout();
 
-  const returnTo = req.protocol + '://' + req.hostname;
-  const port = req.connection.localPort;
+  let returnTo = req.protocol + '://' + req.hostname;
+  let port = req.connection.localPort;
   if (port !== undefined && port !== 80 && port !== 443) {
     returnTo += ':' + port;
   }
-  const logoutURL = new URL(
+  let logoutURL = new URL(
     util.format('https://%s/v2/logout', process.env.AUTH0_DOMAIN)
   );
   const searchString = querystring.stringify({
