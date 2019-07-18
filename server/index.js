@@ -18,9 +18,14 @@ app.get('/', (req, res) => {
 });
 
 app.post('/messages', (req, res) => {
-  database.saveMessage(req.body);
-
-  res.sendStatus(200);
+  database.saveMessage(req.body)
+    .then(() => {
+      res.sendStatus(200);
+    })
+    .catch((error) => {
+      console.error(error);
+      res.sendStatus(404);
+    });
 });
 
 app.get('/messages', (req, res) => {
@@ -28,12 +33,22 @@ app.get('/messages', (req, res) => {
     .then(([results, metadata]) => {
       res.statusCode = 200;
       res.send(results);
+    })
+    .catch((error) => {
+      console.error(error);
+      res.sendStatus(404);
     });
 });
 
 app.post('/users', (req, res) => {
-  database.saveUser(req.body);
-  res.sendStatus(200);
+  database.saveUser(req.body)
+    .then(() => {
+      res.sendStatus(200);
+    })
+    .catch((error) => {
+      console.error(error);
+      res.sendStatus(404);
+    });
 });
 
 app.listen(PORT, () => {
