@@ -1,3 +1,11 @@
 <h1>
-  Hello World
+  Messages
 </h1>
+<input type="text" placeholder="Send Message.." ng-model="value"> 
+<button ng-click="$ctrl.handleSendClick(value)">Send</button>
+
+<div>
+  <div ng-Repeat="obj in $ctrl.messages">
+    <div>{{obj.name}}: {{obj.text}}</div>
+  </div>
+</div>
