@@ -1,13 +1,15 @@
 const express = require('express');
-const app = express()
-const path = require('path');
+
+const app = express();
 const bodyParser = require('body-parser');
+
 const PORT = 3000;
-const database = require('../db/index.js')
+const database = require('../db/index.js');
+
 app.use(bodyParser.urlencoded({
-  extended: true
+  extended: true,
 }));
-app.use(express.static(__dirname+ '/../client/'))
+app.use(express.static(__dirname + '/../client/'));
 app.use(bodyParser.json());
 
 app.get('/', (req, res) => {
@@ -15,28 +17,18 @@ app.get('/', (req, res) => {
   res.statusCode = 200;
 });
 app.post('/messages', (req, res) => {
-  database.save(req.body)
-  res.statusCode = 200;
-  res.end()
+  database.save(req.body);
+  res.sendStatus(200);
 });
 
 app.get('/messages', (req, res) => {
-  database.getAllMessages((err, data) => {
-    if(err){
-      console.error(err);
-      res.statusCode = 404;
-      res.end();
-    }
-    res.statusCode = 200;
-    res.send(data)
-  })
+  database.getAllMessages()
+    .then(([results, metadata]) => {
+      res.statusCode = 200;
+      res.send(results);
+    });
 });
 
-
-
-
-
-
 app.listen(PORT, () => {
-  console.log(`app listening on ${PORT}!`)
+  console.log(`app listening on ${PORT}!`);
 });
