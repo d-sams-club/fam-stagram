@@ -8,16 +8,16 @@ const app = angular.module('app', [])
           userId: 1,
           familyId: 1,
           text: value,
-        });
-
-        $http.get('/messages')
-          .then((data) => {
-            const storage = [];
-            data.data.forEach((message) => {
-              storage.push(message);
+        }).then(() => {
+          $http.get('/messages')
+            .then((data) => {
+              const storage = [];
+              data.data.forEach((message) => {
+                storage.push(message);
+              });
+              this.messages = storage;
             });
-            this.messages = storage;
-          });
+        });
       };
 
       this.init = () => {
