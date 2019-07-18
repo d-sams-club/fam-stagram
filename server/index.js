@@ -17,6 +17,7 @@ const usersRouter = require('./routes/users');
 const app = express()
 dotenv.config();
 const PORT = 3000;
+const database = require('../db/index.js');
 
 // app.engine('html', require('ejs').renderFile);
 // app.set('view engine', 'html');
@@ -68,9 +69,9 @@ app.use(passport.session());
 
 
 app.use(bodyParser.urlencoded({
-  extended: true
+  extended: true,
 }));
-app.use(express.static(__dirname+ '/../client/'))
+app.use(express.static(__dirname + '/../client/'));
 app.use(bodyParser.json());
 app.use(userInViews());
 app.use('/', authRouter);
@@ -98,74 +99,21 @@ app.get('/login', (req, res) => {
   // once front end people give me a file for the signin/signup page i will be able to render it
   // --> res.render('templates/signLog')
   res.render('index');
+  res.statusCode = 200;
 });
-
-// family page where the photos will be displayed fist, with the nav bar with: share code, leave group, chats, gallery(wont do anything ) !! might just let gallery be
-//  refered to as the /family route since they are the same page
-app.get('/family', (req, res) => {
-  // once front end people give me a file for the family page i will be able to render it
-  // --> res.render('templates/family')
-});
-
-
-// family page as well but when chats was clicked from /family it renders the chat room 
-app.get('/chats', (req, res) => {
-  // once front end people give me a file for the chats page i will be able to render it
-  // --> res.render('templates/chats')
-});
-///////////////////////////////////////////////////////////////////
-///////////////////////////////////////////////////////////////////
-
-
-
-///////////////////////////////////////////////////////////////////
-// REQUEST HANDLING
-///////////////////////////////////////////////////////////////////
-app.post('/message', (req, res) => {
-  // need the insert query function from the db
-  /**
-   * const { message } = req.body;
-    db.postMessage(message)
-    .then(result => {
-      console.log('message added to db', result);
-      dont necesarily need to send anything, but we send this so the client can log it on the page so we can see what we just posted on the console
-      res.send(result.data);
-    })
-    .catch(err => {
-      console.error('failed query: ', err);
-    });
-   */
+app.post('/messages', (req, res) => {
+  database.save(req.body);
+  res.sendStatus(200);
 });
 
 app.get('/messages', (req, res) => {
-  // need to get all the messages from the db by selecting all from the messages table
-  /*
-    db.getMessages()
-    .then(messages => {
-      // we will need to send the messages (the whole array) for the client to render all of the messages
-      console.log('got all messages: ', messages);
-      res.send(messages.data);
-    })
-    .catch(err => {
-      console.error('failed to get messages: ', err);
+  database.getAllMessages()
+    .then(([results, metadata]) => {
+      res.statusCode = 200;
+      res.send(results);
     });
-  
-  */
 });
-
-app.post('/photo', (req, res) => {
-    // need to see how we will be going about posting and getting the photos first
-});
-
-app.get('/photos', (req, res) => {
-    // need to see how we will be going about posting and getting the photos first
-});
-///////////////////////////////////////////////////////////////////
-///////////////////////////////////////////////////////////////////
-
-
-
 
 app.listen(PORT, () => {
-  console.log(`app listening on ${PORT}!`)
+  console.log(`app listening on ${PORT}!`);
 });
