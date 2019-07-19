@@ -7,13 +7,9 @@ db.sync()
   .catch((error) => {
     console.error(error);
   });
-const saveUser = (obj) => {
-  db.query(`insert into users (name , email, password) values ("${obj.name}", "${obj.email}", "${obj.password}");`);
-};
+const saveUser = obj => db.query(`insert into users (name , email, password) values ("${obj.name}", "${obj.email}", "${obj.password}");`);
 
-const saveMessage = (obj) => {
-  db.query(`insert into messages (userId, familyId, text) values (${obj.userId}, ${obj.familyId}, "${obj.text}");`);
-};
+const saveMessage = obj => db.query(`insert into messages (userId, familyId, text) values (${obj.userId}, ${obj.familyId}, "${obj.text}");`);
 
 const getAllMessages = () => db.query('select users.name, messages.text from users, messages where messages.userId = users.id;');
 
