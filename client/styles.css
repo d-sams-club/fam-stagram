@@ -1,6 +1,7 @@
 body {
   background-color: aqua;
   text-align: center;
+  font-size: 20px;
 }
 
 .active {
@@ -20,10 +21,11 @@ body {
 
 img { 
   padding: 10px;
-  display: inline-block;
-  height: 600px;
-  width: 600px;
   border-radius: 8px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 70%;
 }
 
 .home_p {
@@ -36,10 +38,12 @@ ul {
   padding: 0;
   overflow: hidden;
   background-color: #333;
+  width: 100%;
 }
 
 li {
   float: left;
+  border-right: 2px solid gray; /*different color? better class names?*/
 }
 
 li a {
@@ -48,11 +52,12 @@ li a {
   text-align: center;
   padding: 14px 16px;
   text-decoration: none;
+  
 }
 
 li a:hover:not(.active) {
   background-color: #111;
 }
-.active {
+.active2 {
   background-color: #4CAF50;
 }

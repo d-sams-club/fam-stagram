@@ -2,13 +2,16 @@
 <div class="nav">
   <ul>
     <li><a href="/user">Join/Create Family</a></li>
-    <li><a class="active" href="/#!/chat">Chat</a></li>
+    <li><a class="active2" href="/#!/chat">Chat</a></li>
     <li><a href="/#!/photos">Photos</a></li>
-    <li><a href="/" ng-click="$ctrl.reload()">Logout</a></li>
+    <li><a href="/" ng-click="$ctrl.reload()">Logout</a></li> 
 
   </ul>
+</div>
 
-  </div>
+<input type="text" placeholder="Send Message.." ng-model="value"> 
+<button ng-click="$ctrl.handleSendClick(value)">Send</button>
+
 <div style="width: 600px; height: 500px; overflow:scroll;">
   <div ng-Repeat="obj in $ctrl.messages" >
     <div> 
@@ -18,5 +21,3 @@
     </div>
   </div>
 </div>
-<input type="text" placeholder="Send Message.." ng-model="value"> 
-<button ng-click="$ctrl.handleSendClick(value)">Send</button>
