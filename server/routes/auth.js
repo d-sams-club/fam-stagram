@@ -1,6 +1,7 @@
 // routes/auth.js
 
 const express = require('express');
+
 const router = express.Router();
 const passport = require('passport');
 const dotenv = require('dotenv');
@@ -14,17 +15,17 @@ dotenv.config();
 
 
 router.get('/login', passport.authenticate('auth0', {
-  scope: 'openid email profile'
-}), function (req, res) {
+  scope: 'openid email profile',
+}), (req, res) => {
   res.redirect('/user');
 });
 
 // Perform the final stage of authentication and redirect to previously requested URL or '/user'
-router.get('/callback', function (req, res, next) {
-  passport.authenticate('auth0', function (err, user, info) {
+router.get('/callback', (req, res, next) => {
+  passport.authenticate('auth0', (err, user, info) => {
     if (err) { return next(err); }
     if (!user) { return res.redirect('/login'); }
-  req.logIn(user, function (err) {
+    req.logIn(user, (err) => {
       if (err) { 
         return next(err); 
       }
@@ -32,7 +33,7 @@ router.get('/callback', function (req, res, next) {
       delete req.session.returnTo;
       res.redirect(returnTo || '/user');
     });
-    
+
     next(null, info);
     // next();
   })(req, res, next);
@@ -42,17 +43,17 @@ router.get('/callback', function (req, res, next) {
 router.get('/logout', (req, res) => {
   req.logout();
 
-  let returnTo = req.protocol + '://' + req.hostname;
-  let port = req.connection.localPort;
+  let returnTo = `${req.protocol}://${req.hostname}`;
+  const port = req.connection.localPort;
   if (port !== undefined && port !== 80 && port !== 443) {
-    returnTo += ':' + port;
+    returnTo += `:${port}`;
   }
-  let logoutURL = new URL(
-    util.format('https://%s/v2/logout', process.env.AUTH0_DOMAIN)
+  const logoutURL = new URL(
+    util.format('https://%s/v2/logout', process.env.AUTH0_DOMAIN),
   );
   const searchString = querystring.stringify({
     client_id: process.env.AUTH0_CLIENT_ID,
-    returnTo: returnTo
+    returnTo,
   });
   logoutURL.search = searchString;
 

@@ -1,10 +1,20 @@
 const app = angular.module('app', ['ngRoute'])
   .component('loggedin', {
-    controller() {
+    controller($http) {
       this.reload = () => {
         setTimeout(() => {
           window.location.reload();
         }, 0);
+      };
+
+      this.handleCreateFamClick = (famName) => {
+        $http.post('/fam', {
+          name: famName,
+        });
+      };
+      this.handleJoinFamClick = (code) => {
+        $http.post('/code', { code });
+        console.log('join code: ', code);
       };
     },
     templateUrl: 'templates/loggedin.html',
@@ -26,7 +36,6 @@ const app = angular.module('app', ['ngRoute'])
         value = value || ' ';
         $http.post('/messages', {
           userId: 1,
-          familyId: 1,
           text: value,
         }).then(() => {
           $http.get('/messages')
