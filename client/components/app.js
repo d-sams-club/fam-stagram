@@ -1,10 +1,20 @@
 const app = angular.module('app', ['ngRoute'])
-  .component('home', {
-    controller($http) {
+  .component('loggedin', {
+    controller() {
       this.reload = () => {
         setTimeout(() => {
           window.location.reload();
-        }, 500);
+        }, 0);
+      };
+    },
+    templateUrl: 'templates/loggedin.html',
+  })
+  .component('home', {
+    controller() {
+      this.reload = () => {
+        setTimeout(() => {
+          window.location.reload();
+        }, 0);
       };
     },
     templateUrl: 'templates/home.html',
@@ -29,7 +39,11 @@ const app = angular.module('app', ['ngRoute'])
             });
         });
       };
-
+      this.reload = () => {
+        setTimeout(() => {
+          window.location.reload();
+        }, 0);
+      };
       this.init = () => {
         $http.get('/messages')
           .then((data) => {
@@ -46,7 +60,11 @@ const app = angular.module('app', ['ngRoute'])
   })
   .component('photos', {
     controller() {
-
+      this.reload = () => {
+        setTimeout(() => {
+          window.location.reload();
+        }, 0);
+      };
     },
     templateUrl: 'templates/photos.html',
   })
@@ -61,7 +79,7 @@ const app = angular.module('app', ['ngRoute'])
           template: '<photos></photos>',
         })
         .when('/user', {
-          template: '<home></home>',
+          template: '<loggedin></loggedin>',
         })
         .when('/', {
           template: '<home></home>',
