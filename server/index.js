@@ -84,7 +84,7 @@ app.post('/messages', (req, res) => {
 
 app.get('/messages', (req, res) => {
   database.getAllMessages()
-    .then(([results, metadata]) => {
+    .then((results) => {
       res.statusCode = 200;
       res.send(results);
     })
