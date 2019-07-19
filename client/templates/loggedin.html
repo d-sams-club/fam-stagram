@@ -1,7 +1,18 @@
-<h1>Logged In</h1>
+<h1>Join Or Create a Family</h1>
 <div class="nav">
+
+    <a href="/" ng-click="$ctrl.reload()">Logout</a>  
     <a href="/#!/chat">Chat</a>
     <a href="/#!/photos">Photos</a>
-    <a href="/" ng-click="$ctrl.reload()">Logout</a>  
+    <a href="/user">Join/Create Family</a>
 
+
+</div>
+<!-- create a family -->
+<input type="text" placeholder="create family" ng-model="createfamily"> 
+<button ng-click="$ctrl.handleCreateFamClick(createfamily)">Create family</button>
+
+<!-- join a family -->
+<input type="text" placeholder="enter family code" ng-model="code"> 
+<button ng-click="$ctrl.handleJoinFamClick(code)">Join family</button>
   </div>
