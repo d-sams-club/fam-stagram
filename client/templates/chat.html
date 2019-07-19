@@ -1,8 +1,9 @@
 <h1>Chat</h1>
 <div class="nav">
-    <a class="active" href="/">Home</a>
     <a href="/#!/chat">Chat</a>
     <a href="/#!/photos">Photos</a>
+    <a class="active" href="/login" ng-click="$ctrl.reload()">Logout</a>  
+
   </div>
 <div style="width: 600px; height: 500px; overflow:scroll;">
   <div ng-Repeat="obj in $ctrl.messages" >
