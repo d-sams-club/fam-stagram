@@ -1,11 +1,14 @@
 const app = angular.module('app', ['ngRoute'])
   .component('home', {
-    controller() {
-
+    controller($http) {
+      this.reload = () => {
+        setTimeout(() => {
+          window.location.reload();
+        }, 500);
+      };
     },
     templateUrl: 'templates/home.html',
   })
-
   .component('chat', {
     controller($http) {
       this.messages = [];
@@ -47,17 +50,18 @@ const app = angular.module('app', ['ngRoute'])
     },
     templateUrl: 'templates/photos.html',
   })
-  .config(['$routeProvider',
-    function config($routeProvider) {
+  .config(['$routeProvider', '$locationProvider',
+    function config($routeProvider, $locationProvider) {
+      $locationProvider.html5Mode(true);
       $routeProvider
-        .when('/', {
-          template: '<home></home>',
-        })
         .when('/chat', {
           template: '<chat><chat>',
         })
         .when('/photos', {
           template: '<photos></photos>',
+        })
+        .when('/user', {
+          template: '<home></home>',
         })
         .when('/', {
           template: '<home></home>',
