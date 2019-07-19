@@ -1,6 +1,7 @@
 /* eslint-disable no-console */
 const passport = require('passport');
 const Auth0Strategy = require('passport-auth0');
+const database = require('../../db/index');
 
 const strategy = new Auth0Strategy(
   {
@@ -20,7 +21,10 @@ const strategy = new Auth0Strategy(
 
 passport.use(strategy);
 passport.serializeUser((user, done) => {
-  console.log(user);
+  database.saveUser({
+    name: user.displayName,
+    email: user.emails[0].value,
+  });
   done(null, user.id);
 });
 passport.deserializeUser((user, done) => {
