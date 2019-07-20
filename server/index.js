@@ -54,17 +54,6 @@ app.use('/', authRouter);
 app.use('/', indexRouter);
 app.use('/', usersRouter);
 
-// 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
-// sgMail.setApiKey(process.env.SENDGRID_API_KEY);
-// const msg = {
-//   to: 'retrofied23@gmail.com',
-//   from: 'retrofied23@gmail.com',
-//   subject: 'Welcome to Famstagram',
-//   text: `Your family code is <strong>${code}</strong>`,
-//   html: '<strong>and easy to do anywhere, even with Node.js</strong>',
-// };
-// sgMail.send(msg);
-
 
 // /////////////////////////////////////////////////////////////////
 // ROUTE/PAGE LOADING:
