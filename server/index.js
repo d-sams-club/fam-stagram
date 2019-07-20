@@ -10,6 +10,8 @@ const authRouter = require('./routes/auth');
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
 const passport = require('./middleware/passport');
+const sgMail = require('@sendgrid/mail');
+sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
 
 const app = express();
@@ -52,6 +54,17 @@ app.use('/', authRouter);
 app.use('/', indexRouter);
 app.use('/', usersRouter);
 
+// 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
+// sgMail.setApiKey(process.env.SENDGRID_API_KEY);
+// const msg = {
+//   to: 'retrofied23@gmail.com',
+//   from: 'retrofied23@gmail.com',
+//   subject: 'Welcome to Famstagram',
+//   text: `Your family code is <strong>${code}</strong>`,
+//   html: '<strong>and easy to do anywhere, even with Node.js</strong>',
+// };
+// sgMail.send(msg);
+
 
 // /////////////////////////////////////////////////////////////////
 // ROUTE/PAGE LOADING:
@@ -72,9 +85,12 @@ const makeId = (length) => {
   return result;
 };
 
+
 let currentCode = 'OUTSIDE CODE';
+let currentFam = 'CURRENT FAMILY';
 
 app.post('/fam', (req, res) => {
+  console.log(req.session);
   currentCode = makeId(10);
   const famName = req.body.name;
   database.saveFamily({
@@ -111,13 +127,22 @@ app.get('/messages', (req, res) => {
     code: currentCode,
   };
   database.getAllMessages(obj)
-    .then(([results, metadata]) => {
+    .then((data) => {
       res.statusCode = 200;
-      res.send(results);
+      const promise = data[0];
+      currentFam = data[1];
+      promise.then(([results, metadata]) => {
+        res.statusCode = 200;
+        res.send({
+          results,
+          famName: currentFam,
+        });
+      });
     })
-    .catch((error) => {
-      console.error(error);
-      res.sendStatus(404);
+    .catch((err) => {
+      res.statusCode = 404;
+      console.error(err);
+      res.end();
     });
 });
 
@@ -132,6 +157,21 @@ app.post('/users', (req, res) => {
     });
 });
 
+app.post('/sendEmail', (req, res) => {
+  console.log(req.body.recipient, currentCode, currentFam);
+  const msg = {
+    to: req.body.recipientEmail,
+    from: 'kingdweeber@gmail.com',
+    subject: 'Welcome to Famstagram',
+    html: `Your have been invided to join the ${currentFam} family on Famstagram. Your Join Code is <strong>${currentCode}</strong>!
+    <br><br><br> Famstagram - The more intamate Instagram`,
+  };
+  sgMail.send(msg);
+
+
+  res.statusCode = 200;
+  res.end();
+});
 
 app.listen(PORT, () => {
   console.log(`app listening on ${PORT}!`);
