@@ -11,7 +11,7 @@ const app = angular.module('app', ['ngRoute'])
         $http.post('/fam', {
           name: famName,
         });
-        console.log(famName)
+        console.log(famName);
       };
       this.handleJoinFamClick = (code) => {
         $http.post('/code', { code });
@@ -58,7 +58,7 @@ const app = angular.module('app', ['ngRoute'])
           $http.get('/messages')
             .then((data) => {
               const storage = [];
-              data.data.forEach((message) => {
+              data.data.results.forEach((message) => {
                 storage.push(message);
               });
               this.messages = storage;
