@@ -11,7 +11,7 @@ const app = angular.module('app', ['ngRoute'])
         $http.post('/fam', {
           name: famName,
         });
-        console.log(famName)
+        console.log(famName);
       };
       this.handleJoinFamClick = (code) => {
         $http.post('/code', { code });

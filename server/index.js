@@ -147,7 +147,6 @@ app.post('/users', (req, res) => {
 });
 
 app.post('/sendEmail', (req, res) => {
-  console.log(req.body.recipient, currentCode, currentFam);
   const msg = {
     to: req.body.recipientEmail,
     from: 'kingdweeber@gmail.com',
@@ -158,7 +157,7 @@ app.post('/sendEmail', (req, res) => {
   sgMail.send(msg);
 
 
-  res.statusCode = 200;
+  res.statusCode = 200; 
   res.end();
 });
 
