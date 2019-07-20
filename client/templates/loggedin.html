@@ -13,10 +13,10 @@
       <p class="inputDiv_title">CREATE OR JOIN YOUR FAMILY</p>
   <!-- create a family -->
     <input type="text" placeholder="Create Family.." ng-model="createfamily"> 
-    <button class="homeBtn"><a ng-click="$ctrl.handleCreateFamClick(createfamily)" href="/#!/chat"><i class="material-icons">group_add</i></a></button>
+    <button href="/#!/chat" class="homeBtn"><a ng-click="$ctrl.handleCreateFamClick(createfamily)" href="/#!/chat"><i class="material-icons">group_add</i></a></button>
   
     <!-- join a family -->
     <input type="text" placeholder="Enter Family Code.." ng-model="code"> 
-    <button class="homeBtn"><a ng-click="$ctrl.handleJoinFamClick(code)" href="/#!/chat"><i class="material-icons">send</i></a></button>
+    <button href="/#!/chat" class="homeBtn"><a ng-click="$ctrl.handleJoinFamClick(code)" href="/#!/chat"><i class="material-icons">send</i></a></button>
 
   </div>

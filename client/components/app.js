@@ -58,7 +58,7 @@ const app = angular.module('app', ['ngRoute'])
           $http.get('/messages')
             .then((data) => {
               const storage = [];
-              data.data.forEach((message) => {
+              data.data.results.forEach((message) => {
                 storage.push(message);
               });
               this.messages = storage;

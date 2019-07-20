@@ -12,6 +12,9 @@ body {
 a {
   color: white;
 }
+a:hover {
+  color: white;
+}
 
 /* .mainImg {
 background-repeat: no-repeat;
@@ -220,11 +223,11 @@ input[type=text] {
   width: 10%
 }
 
-.homeBtn:hover, .cstm_Btn:hover, .cstm_BtnS:hover {
+/* .homeBtn:hover, .cstm_Btn:hover, .cstm_BtnS:hover {
   background-color: #45a049;
-}
+} */
 
-.homeBtn:after, .cstm_Btn:after, .cstm_BtnS:after {
+/* .homeBtn:after, .cstm_Btn:after, .cstm_BtnS:after {
   content: "";
   background: #f1f1f1;
   display: block;
@@ -235,11 +238,11 @@ input[type=text] {
   margin-top: -120%;
   opacity: 0;
   transition: all 0.8s
-}
+} */
 
-.homeBtn:active:after, .cstm_Btn:active:after, .cstm_BtnS:active:after {
+/* .homeBtn:active:after, .cstm_Btn:active:after, .cstm_BtnS:active:after {
   padding: 0;
   margin: 0;
   opacity: 1;
   transition: 0s
-}
+} */
