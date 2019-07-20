@@ -33,7 +33,7 @@ img {
   font-size: 20px;
 }
 
-.title {
+.title, .home_title {
   padding-right: 20%;
   font-size: 50px;
   text-align: center;
@@ -42,6 +42,12 @@ img {
   color: orange;
   margin: 0;
   
+}
+
+.home_title {
+  padding-left: 20%;
+  padding-bottom: 5%;
+  font-size: 100px;
 }
 
 .active {
