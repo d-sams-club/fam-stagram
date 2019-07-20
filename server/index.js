@@ -158,7 +158,7 @@ app.post('/sendEmail', (req, res) => {
   sgMail.send(msg);
 
 
-  res.statusCode = 200;
+  res.statusCode = 200; 
   res.end();
 });
 
