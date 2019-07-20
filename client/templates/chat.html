@@ -1,19 +1,24 @@
-<h1>Chat</h1>
-<div class="nav">
-    <a href="/#!/chat">Chat</a>
-    <a href="/#!/photos">Photos</a>
-    <a href="/user">Join/Create Family</a>
-    <a class="active" href="/" ng-click="$ctrl.reload()">Logout</a>  
 
-  </div>
-<div style="width: 600px; height: 500px; overflow:scroll;">
+<div class="nav">
+  <ul>
+    <li><a href="/user"><i class="material-icons">people_outline</i></a></li>
+    <li><a class="active2" href="/#!/chat"><i class="material-icons">chat</i></a></li>
+    <li><a href="/#!/photos"><i class="material-icons">photo_library</i></a></li>
+    <li style="float:right"><a href="/" ng-click="$ctrl.reload()"><i class="material-icons">directions_run</i></a></li> 
+    <h1 class="title">Chat</h1>
+
+  </ul>
+</div>
+
+<input type="text" placeholder="Send Message.." ng-model="value"> 
+<button class="homeBtn" ng-click="$ctrl.handleSendClick(value)">Send  <i class="material-icons">send</i></button>
+
+<div class="chat" style="width: 600px; height: 500px; overflow:scroll;">
   <div ng-Repeat="obj in $ctrl.messages" >
     <div> 
-      <ul>
+      <ul class="chat_ul">
         <li>{{obj.name}}: {{obj.text}}</li>
       </ul>
     </div>
   </div>
 </div>
-<input type="text" placeholder="Send Message.." ng-model="value"> 
-<button ng-click="$ctrl.handleSendClick(value)">Send</button>

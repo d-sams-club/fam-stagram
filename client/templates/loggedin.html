@@ -1,18 +1,21 @@
-<h1>Join Or Create a Family</h1>
-<div class="nav">
-
-    <a href="/" ng-click="$ctrl.reload()">Logout</a>  
-    <a href="/#!/chat">Chat</a>
-    <a href="/#!/photos">Photos</a>
-    <a href="/user">Join/Create Family</a>
-
-
-</div>
-<!-- create a family -->
-<input type="text" placeholder="create family" ng-model="createfamily"> 
-<button ng-click="$ctrl.handleCreateFamClick(createfamily)">Create family</button>
-
-<!-- join a family -->
-<input type="text" placeholder="enter family code" ng-model="code"> 
-<button ng-click="$ctrl.handleJoinFamClick(code)">Join family</button>
+  
+  <div class="nav">
+    <ul>
+      <li><a class="active2"href="/user"><i class="material-icons">people_outline</i></a></li>
+      <li><a href="/#!/chat"><i class="material-icons">chat</i></a></li>
+      <li><a href="/#!/photos"><i class="material-icons">photo_library</i></a></li>
+      <li style="float:right"><a href="/" ng-click="$ctrl.reload()"><i class="material-icons">directions_run</i></a></li>
+      <p class="title">Famstagram</p>
+    </ul>
+  
+  
+  </div>
+  <div class="inputDiv">
+  <!-- create a family -->
+    <input type="text" placeholder="create family.." ng-model="createfamily"> 
+    <button class="homeBtn" ng-click="$ctrl.handleCreateFamClick(createfamily)"><i class="material-icons">group_add</i></button>
+  
+    <!-- join a family -->
+    <input type="text" placeholder="enter family code.." ng-model="code"> 
+    <button class="homeBtn" ng-click="$ctrl.handleJoinFamClick(code)"><i class="material-icons">send</i></button>
   </div>

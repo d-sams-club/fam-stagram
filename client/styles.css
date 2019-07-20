@@ -1,0 +1,206 @@
+body {
+  background-image: url('https://www.awakenthegreatnesswithin.com/wp-content/uploads/2018/05/Family-Quotes-1.jpg');
+  background-repeat: no-repeat;
+  background-size: cover;
+  /* background-color: aqua;
+  background-size: cover; */
+  text-align: center;
+  font-size: 20px;
+}
+
+/* .mainImg {
+background-repeat: no-repeat;
+background-size: cover;
+} */
+
+img {
+  padding: 10px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  
+}
+
+.log {
+  background-color: aqua;
+  background-size: cover;
+  text-align: center;
+  font-size: 20px;
+}
+
+.title {
+  padding-right: 20%;
+  font-size: 50px;
+  text-align: center;
+  font-family: Snell Roundhand, cursive;
+  font-weight: 900;
+  color: white;
+  margin: 0;
+}
+
+.active {
+  color: black;
+  margin: 0 auto;
+  padding: 10px;
+  background-color: #4CAF50; /* Green */
+  border: none;
+  border-radius: 8px;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+}
+
+
+.home_p {
+  font-size: 30px;
+}
+
+ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background-color: #333;
+  width: 100%;
+}
+
+li {
+  float: left;
+  cursor: pointer;
+  position: relative;
+  border: none;
+  border-radius: 4px;
+  text-align: center;
+  -webkit-transition-duration: 0.4s; /* Safari */
+  transition-duration: 0.4s;
+  text-decoration: none;
+  overflow: hidden;
+}
+
+li a {
+  display: block;
+  color: white;
+  text-align: center;
+  padding: 30px 40px;
+  text-decoration: none;
+  
+}
+
+li a:hover:not(.active) {
+  background-color: #111;
+}
+
+li :after {
+  content: "";
+  background: #f1f1f1;
+  display: block;
+  position: absolute;
+  padding-top: 300%;
+  padding-left: 350%;
+  margin-left: -20px !important;
+  margin-top: -120%;
+  opacity: 0;
+  transition: all 0.8s
+}
+
+li :active:after {
+  padding: 0;
+  margin: 0;
+  opacity: 1;
+  transition: 0s
+}
+
+li:last-child {
+  border-right: none;
+}
+
+.active2 {
+  background-color: #4CAF50;
+}
+
+.inputDiv {
+  margin-left: auto;
+  margin-right: auto;
+  border-radius: 5px;
+  background-color: #f2f2f2;
+  padding: 80px;
+  width: 50%;
+}
+
+.chat {
+  margin-left: auto;
+  margin-right: auto;
+  border-radius: 5px;
+  background-color: #f2f2f2;
+  padding: 80px;
+  width: 50%;
+}
+
+.chat_ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 10px;
+  overflow: hidden;
+  background-color: white;
+  width: 100%;
+}
+
+input[type=text] {
+  width: 100%;
+  box-sizing: border-box;
+  border: 2px solid #ccc;
+  border-radius: 4px;
+  font-size: 16px;
+  background-color: white;
+  background-image: url('searchicon.png');
+  background-position: 10px 10px; 
+  background-repeat: no-repeat;
+  padding: 12px 20px 12px 40px;
+}
+
+.homeBtn {
+  width: 20%;
+  background-color: #4CAF50;
+  color: white;
+  padding: 14px 20px;
+  margin: 8px 0;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-right:5px;
+  position: relative;
+  border: none;
+  text-align: center;
+  -webkit-transition-duration: 0.4s; /* Safari */
+  transition-duration: 0.4s;
+  text-decoration: none;
+  overflow: hidden;
+}
+
+.homeBtn:hover {
+  background-color: #45a049;
+}
+
+.homeBtn:after {
+  content: "";
+  background: #f1f1f1;
+  display: block;
+  position: absolute;
+  padding-top: 300%;
+  padding-left: 350%;
+  margin-left: -20px !important;
+  margin-top: -120%;
+  opacity: 0;
+  transition: all 0.8s
+}
+
+.homeBtn:active:after {
+  padding: 0;
+  margin: 0;
+  opacity: 1;
+  transition: 0s
+}
