@@ -1,7 +1,7 @@
 const Sequelize = require('sequelize');
 
 const db = new Sequelize('famstagram', 'root', '', {
-  host: 'localhost',
+  host: process.env.HOST || 'localhost',
   dialect: 'mysql',
 });
 
