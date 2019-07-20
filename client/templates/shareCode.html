@@ -7,13 +7,13 @@
     <li><a href="/#!/chat"><i class="material-icons">chat</i></a></li>
     <li><a href="/#!/photos"><i class="material-icons">photo_library</i></a></li>
     <li><a class="active2" href="/#!/sharecode"><i class="material-icons">share</i></a></li>
-    <li style="float:right"><a href="/" ng-click="$ctrl.reload()"><i class="material-icons">directions_run</i></a></li>
-        <p>Share Family Code</p>
+    <li style="float:right"><a href="/" ng-click="$ctrl.reload()"><i class="material-icons">exit_to_app</i></a></li>
+        <p class="title">Share Family Code</p>
   </ul>
 
 </div>
 
 
-<input type="text" placeholder="enter email" ng-model="email">
-<button ng-click="$ctrl.sendEmail(email)">Send</button>
+<input class="cstm_inputS" type="text" placeholder="Enter Email.." ng-model="email">
+<button class="cstm_BtnS" ng-click="$ctrl.sendEmail(email)">Send <i class="material-icons">send</i></button>
 
