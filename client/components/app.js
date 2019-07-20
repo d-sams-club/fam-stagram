@@ -11,6 +11,7 @@ const app = angular.module('app', ['ngRoute'])
         $http.post('/fam', {
           name: famName,
         });
+        console.log(famName)
       };
       this.handleJoinFamClick = (code) => {
         $http.post('/code', { code });
@@ -29,9 +30,25 @@ const app = angular.module('app', ['ngRoute'])
     },
     templateUrl: 'templates/home.html',
   })
+  .component('sharecode', {
+    controller($http) {
+      this.reload = () => {
+        setTimeout(() => {
+          window.location.reload();
+        }, 0);
+      };
+      this.sendEmail = (email) => {
+        $http.post('/sendEmail', {
+          recipientEmail: email,
+        });
+      };
+    },
+    templateUrl: 'templates/shareCode.html',
+  })
   .component('chat', {
     controller($http) {
       this.messages = [];
+      this.famName;
       this.handleSendClick = (value) => {
         value = value || ' ';
         $http.post('/messages', {
@@ -56,8 +73,10 @@ const app = angular.module('app', ['ngRoute'])
       this.init = () => {
         $http.get('/messages')
           .then((data) => {
+            this.famName = data.data.famName;
             const storage = [];
-            data.data.forEach((message) => {
+            console.log(data);
+            data.data.results.forEach((message) => {
               storage.push(message);
             });
             this.messages = storage;
@@ -89,6 +108,9 @@ const app = angular.module('app', ['ngRoute'])
         })
         .when('/user', {
           template: '<loggedin></loggedin>',
+        })
+        .when('/sharecode', {
+          template: '<sharecode></sharecode>',
         })
         .when('/', {
           template: '<home></home>',
