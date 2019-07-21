@@ -158,7 +158,7 @@ app.get('/currentUser', (req, res) => {
     });
   res.statusCode = 200;
 });
- 
+  
 app.post('/sendEmail', (req, res) => {
   const msg = {
     to: req.body.recipientEmail,
