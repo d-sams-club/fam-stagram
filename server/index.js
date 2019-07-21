@@ -4,13 +4,13 @@ const path = require('path');
 const bodyParser = require('body-parser');
 const session = require('express-session');
 const dotenv = require('dotenv');
+const sgMail = require('@sendgrid/mail');
 const db = require('../db/index');
 const userInViews = require('./middleware/userInViews');
 const authRouter = require('./routes/auth');
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
 const passport = require('./middleware/passport');
-const sgMail = require('@sendgrid/mail');
 sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
 
@@ -130,7 +130,7 @@ app.get('/messages', (req, res) => {
       });
     })
     .catch((err) => {
-      //just means the current fam has no messages so roomName wont show
+      // an err here just means the current fam has no messages so roomName wont show
       res.send({
         results: [[]],
         famName: currentFam,
@@ -140,13 +140,23 @@ app.get('/messages', (req, res) => {
 
 app.post('/users', (req, res) => {
   database.saveUser(req.body)
-    .then(() => {
+    .then((data) => {
       res.sendStatus(200);
     })
     .catch((error) => {
       console.error(error);
       res.sendStatus(404);
     });
+});
+
+app.get('/currentUser', (req, res) => {
+  console.log('current user');
+  database.getAllUsers()
+    .then((data) => {
+      const latestId = data[0][data[0].length - 1].id;
+      res.send({ personId: latestId });
+    });
+  res.statusCode = 200;
 });
 
 app.post('/sendEmail', (req, res) => {
@@ -158,9 +168,7 @@ app.post('/sendEmail', (req, res) => {
     <br><br><br> Famstagram - The more intamate Instagram`,
   };
   sgMail.send(msg);
-
-
-  res.statusCode = 200; 
+  res.statusCode = 200;
   res.end();
 });
 
