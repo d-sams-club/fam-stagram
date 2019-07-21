@@ -1,3 +1,15 @@
 <div>
+<<<<<<< HEAD
   <galleryListItem ng-repeat="photo in $ctrl.photos" photo="photo"></galleryListItem>
+=======
+  <div>
+    <galleryListItem ng-repeat="photo in $ctrl.photos" photo="photo"></galleryListItem>
+  </div>
+  <div>
+    <form method="post" enctype="multipart/form-data" action="/pictures">
+      <input type="file" name="file"><br>
+      <input type="submit" value="Submit">
+    </form>
+  </div>
+>>>>>>> 7fbb955ff4491fdb70f758c144dd68d4787f3791
 </div>
