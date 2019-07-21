@@ -61,7 +61,7 @@ const Photo = db.define('photo', {
   text: { type: Sequelize.STRING },
   url: { type: Sequelize.STRING },
   caption: { type: Sequelize.STRING },
-  userId: { type: Sequelize.INTEGER, references: { model: 'users', key: 'id' } },
+  family: { type: Sequelize.STRING },
   createdAt: {
     type: 'TIMESTAMP',
     defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
