@@ -1,10 +1,20 @@
 const app = angular.module('app', ['ngRoute'])
   .component('loggedin', {
-    controller() {
+    controller($http) {
       this.reload = () => {
         setTimeout(() => {
           window.location.reload();
         }, 0);
+      };
+
+      this.handleCreateFamClick = (famName) => {
+        $http.post('/fam', {
+          name: famName,
+        });
+      };
+      this.handleJoinFamClick = (code) => {
+        $http.post('/code', { code });
+        console.log('join code: ', code);
       };
     },
     templateUrl: 'templates/loggedin.html',
@@ -19,20 +29,38 @@ const app = angular.module('app', ['ngRoute'])
     },
     templateUrl: 'templates/home.html',
   })
+  .component('sharecode', {
+    controller($http) {
+      this.reload = () => {
+        setTimeout(() => {
+          window.location.reload();
+        }, 0);
+      };
+      this.sendEmail = (email) => {
+        $http.post('/sendEmail', {
+          recipientEmail: email,
+        });
+      };
+    },
+    templateUrl: 'templates/shareCode.html',
+  })
   .component('chat', {
     controller($http) {
       this.messages = [];
+      this.famName;
       this.handleSendClick = (value) => {
         value = value || ' ';
         $http.post('/messages', {
           userId: 1,
-          familyId: 1,
           text: value,
         }).then(() => {
           $http.get('/messages')
             .then((data) => {
+              console.log(data.data.famName);
+              famName = data.data.famName;
+              console.log("this.famName", this.famName, data);
               const storage = [];
-              data.data.forEach((message) => {
+              data.data.results.forEach((message) => {
                 storage.push(message);
               });
               this.messages = storage;
@@ -47,8 +75,10 @@ const app = angular.module('app', ['ngRoute'])
       this.init = () => {
         $http.get('/messages')
           .then((data) => {
+            this.famName = data.data.famName;
             const storage = [];
-            data.data.forEach((message) => {
+            console.log(data);
+            data.data.results.forEach((message) => {
               storage.push(message);
             });
             this.messages = storage;
@@ -80,6 +110,9 @@ const app = angular.module('app', ['ngRoute'])
         })
         .when('/user', {
           template: '<loggedin></loggedin>',
+        })
+        .when('/sharecode', {
+          template: '<sharecode></sharecode>',
         })
         .when('/', {
           template: '<home></home>',
