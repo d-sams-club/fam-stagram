@@ -1,8 +1,5 @@
 const db = require('./models.js');
 
-
-
-
 db.sync()
   .then(() => {
     console.log('Database Connected!');
@@ -19,14 +16,6 @@ const saveUser = (obj) => {
     },
   }).then((results) => {
     if (!results.length) {
-      // const msg = {
-      //   to: `${obj.email}`,
-      //   from: 'retrofied23@gmail.com',
-      //   subject: 'Welcome to Famstagram',
-      //   text: `Your family code is <strong>${obj.}</strong>`,
-      //   html: '<strong>and easy to do anywhere, even with Node.js</strong>',
-      // };
-      // sgMail.send(msg);
       return db.query(`insert into users (name, email) values ("${obj.name}", "${obj.email}");`);
     }
   });

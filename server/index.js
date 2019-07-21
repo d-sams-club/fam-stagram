@@ -82,6 +82,7 @@ app.post('/fam', (req, res) => {
   console.log(req.session);
   currentCode = makeId(10);
   const famName = req.body.name;
+  currentFam = famName;
   database.saveFamily({
     name: famName,
     code: currentCode,
@@ -129,9 +130,11 @@ app.get('/messages', (req, res) => {
       });
     })
     .catch((err) => {
-      res.statusCode = 404;
-      console.error(err);
-      res.end();
+      //just means the current fam has no messages so roomName wont show
+      res.send({
+        results: [[]],
+        famName: currentFam,
+      });
     });
 });
 
@@ -149,7 +152,7 @@ app.post('/users', (req, res) => {
 app.post('/sendEmail', (req, res) => {
   const msg = {
     to: req.body.recipientEmail,
-    from: 'kingdweeber@gmail.com',
+    from: 'FamstagramMail@gmail.com',
     subject: 'Welcome to Famstagram',
     html: `Your have been invided to join the ${currentFam} family on Famstagram. Your Join Code is <strong>${currentCode}</strong>!
     <br><br><br> Famstagram - The more intamate Instagram`,
