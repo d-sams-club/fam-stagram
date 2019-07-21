@@ -89,12 +89,13 @@ const app = angular.module('app', ['ngRoute'])
     templateUrl: 'templates/chat.html',
   })
   .component('photos', {
-    controller() {
+    controller($http) {
       this.reload = () => {
         setTimeout(() => {
           window.location.reload();
         }, 0);
       };
+      // httpService.getPictures()
     },
     templateUrl: 'templates/photos.html',
   })

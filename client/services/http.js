@@ -8,8 +8,8 @@ app.service('httpService', function ($http) {
       })
   }
 
-  this.getPictures = (room) => {
-    $http.get(`/pictures/${room}`)
+  this.getPictures = () => {
+    $http.get(`/pictures`)
       .then((pictures) => {
         console.log(pictures)
       })

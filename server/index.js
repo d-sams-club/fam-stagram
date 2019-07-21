@@ -1,15 +1,10 @@
 const multer =require('multer');
-<<<<<<< HEAD
-=======
 // REQUIRED STUFF
->>>>>>> 7fbb955ff4491fdb70f758c144dd68d4787f3791
 const express = require('express');
 const path = require('path');
 const bodyParser = require('body-parser');
 const fs = require('fs'); 
 const http = require('http');
-<<<<<<< HEAD
-=======
 const session = require('express-session');
 const dotenv = require('dotenv');
 const db = require('../db/index');
@@ -24,7 +19,6 @@ sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
 const app = express();
 dotenv.config();
->>>>>>> 7fbb955ff4491fdb70f758c144dd68d4787f3791
 const PORT = 3000;
 const database = require('../db/index.js');
 
@@ -66,13 +60,10 @@ app.use('/', indexRouter);
 app.use('/', usersRouter);
 
 
-<<<<<<< HEAD
-=======
 // /////////////////////////////////////////////////////////////////
 // ROUTE/PAGE LOADING:
 // /////////////////////////////////////////////////////////////////
 
->>>>>>> 7fbb955ff4491fdb70f758c144dd68d4787f3791
 const upload = multer({
   dest: __dirname + "/pictures/raw"
 });
@@ -84,15 +75,12 @@ const handleError = (err, res) => {
     .end("Oops! Something went wrong!");
 };
 
-<<<<<<< HEAD
-=======
 // the home page with the join family, create family, and logout
->>>>>>> 7fbb955ff4491fdb70f758c144dd68d4787f3791
 app.get('/', (req, res) => {
   res.render('index');
 });
 
-app.post('/pictures', upload.single("file"),(req, res) => {
+app.post('/photos', upload.single("file"),(req, res) => {
   console.log(req);
   const tempPath = req.file.path;
   const targetPath = path.join(__dirname, `/pictures/${req.file.originalname}`);
@@ -105,9 +93,15 @@ app.post('/pictures', upload.single("file"),(req, res) => {
       }
 
       fs.appendFile(`${__dirname}/pictures/order.txt`, `${req.file.originalname}\n`)
-      res.status(200)
-        .contentType("text/plain")
-        .end("File uploaded!");
+      db.savePhoto({
+        name: req.file.originalname,
+        code: currentCode
+      })
+      .then(() => {
+        res.statusCode = 200;
+        res.end();
+      })
+      
     });
   } else {
     fs.unlink(tempPath, err => {
@@ -116,16 +110,15 @@ app.post('/pictures', upload.single("file"),(req, res) => {
         return handleError(err, res);
       }
 
-      res.status(403)
-        .contentType("text/plain")
-        .end("Only .png files are allowed!");
+      res.statusCode = 403;
+      res.end("Only .png files are allowed!");
     });
   }
 });
-<<<<<<< HEAD
 
-=======
->>>>>>> 7fbb955ff4491fdb70f758c144dd68d4787f3791
+app.get('/pictures', (req, res) => {
+  res.send(db.getPhotos(currentCode));
+});
 
 // the 'auth' page, where the login and signup will be
 // app.get('/login', (req, res) => {
