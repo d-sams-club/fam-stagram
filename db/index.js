@@ -53,8 +53,18 @@ const saveFamily = (obj) => {
   });
 };
 
+const savePhoto = obj => db.query(`insert into photos (url, family) values ("${obj.name}", "${obj.code}")`);
+
+const getPhotos = code => db.models.photo.findAll({
+  where: {
+    family: code,
+  },
+});
+
 module.exports.db = db;
 module.exports.saveUser = saveUser;
 module.exports.saveFamily = saveFamily;
 module.exports.saveMessage = saveMessage;
 module.exports.getAllMessages = getAllMessages;
+module.exports.savePhoto = savePhoto;
+module.exports.getPhotos = getPhotos;
