@@ -21,7 +21,7 @@ sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
 const app = express();
 dotenv.config();
-const PORT = process.env.PORT || 3000;
+const PORT = 3000;
 const database = require('../db/index.js');
 
 // app.engine('html', require('ejs').renderFile);
