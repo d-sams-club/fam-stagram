@@ -1,0 +1,39 @@
+
+<div class="nav">
+
+    <ul>
+      <!-- <a href="/user">Join/Create Family</a> -->
+      <li><a href="/user"><i class="material-icons">people</i></a></li>
+      <li><a href="/#!/chat"><i class="material-icons">chat</i></a></li>
+      <li><a href="/#!/photos"><i class="material-icons">photo_library</i></a></li>
+      <li><a class="active2" href="/#!/activites"><i class="material-icons">local_activity</i></a></li>
+      <li><a href="/#!/sharecode"><i class="material-icons">share</i></a></li>
+      <li style="float:right"><a href="/" ng-click="$ctrl.reload()"><i class="material-icons">exit_to_app</i></a></li>
+          <p class="title">Family Activites</p>
+    </ul>
+  
+  
+  </div>
+
+  <div ng-Repeat="obj in $ctrl.activities" >
+      <div> 
+        <ul> 
+          <li>
+            <div>
+              {{obj.name}} </br>
+              Rating: {{obj.rating}} </br>
+              Location: {{obj.location.display_address[0]}}
+            </div> 
+            <div>
+                <img ng-src="{{obj.image_url}}" style="height:200px;width:200px;"/>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+  
+  <p>Seach for things to do in your families area!</p>
+  <input class="cstm_inputS" type="text" placeholder="Ex: 'New Orleans, 70119, France'" ng-model="location">
+  <button class="cstm_BtnS" ng-click="$ctrl.searchActivities(location)">Search <i class="material-icons">search</i></button>
+  
+  

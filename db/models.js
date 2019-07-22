@@ -1,7 +1,8 @@
 const Sequelize = require('sequelize');
 
+
 const db = new Sequelize('famstagram', 'root', '', {
-  host: process.env.HOST || 'localhost',
+  host: process.env.HOST,
   dialect: 'mysql',
 });
 
@@ -9,7 +10,7 @@ const db = new Sequelize('famstagram', 'root', '', {
 const User = db.define('user', {
   id: { type: Sequelize.INTEGER, autoIncrement: true, primaryKey: true },
   name: { type: Sequelize.STRING },
-  email: { type: Sequelize.STRING, unqiue: true },
+  email: { type: Sequelize.STRING },
   // password: { type: Sequelize.STRING },
   createdAt: {
     type: 'TIMESTAMP',
@@ -26,7 +27,7 @@ const User = db.define('user', {
 const Family = db.define('family', {
   id: { type: Sequelize.INTEGER, autoIncrement: true, primaryKey: true },
   name: { type: Sequelize.STRING },
-  code: { type: Sequelize.STRING, unqiue: true },
+  code: { type: Sequelize.STRING, unique: true },
   createdAt: {
     type: 'TIMESTAMP',
     defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
@@ -59,9 +60,9 @@ const Message = db.define('message', {
 const Photo = db.define('photo', {
   id: { type: Sequelize.INTEGER, autoIncrement: true, primaryKey: true },
   text: { type: Sequelize.STRING },
-  url: { type: Sequelize.STRING },
+  url: { type: Sequelize.STRING, unique: true },
   caption: { type: Sequelize.STRING },
-  userId: { type: Sequelize.INTEGER, references: { model: 'users', key: 'id' } },
+  family: { type: Sequelize.STRING },
   createdAt: {
     type: 'TIMESTAMP',
     defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
@@ -105,4 +106,6 @@ const ReactionPhoto = db.define('reactionPhoto', {
     allowNull: false,
   },
 });
+
+
 module.exports = db;

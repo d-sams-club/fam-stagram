@@ -1,17 +1,22 @@
+
+
+* {
+  box-sizing: border-box;
+}
 body {
-  background-image: url('https://www.awakenthegreatnesswithin.com/wp-content/uploads/2018/05/Family-Quotes-1.jpg');
+  /* background-image: url('https://www.awakenthegreatnesswithin.com/wp-content/uploads/2018/05/Family-Quotes-1.jpg'); */
   background-repeat: no-repeat;
   background-size: cover;
-  /* background-color: aqua;
-  background-size: cover; */
+  background-color: #f1f1f1;
   text-align: center;
   font-size: 20px;
 }
-
-/* .mainImg {
-background-repeat: no-repeat;
-background-size: cover;
-} */
+a {
+  color: white;
+}
+a:hover {
+  color: white;
+}
 
 img {
   padding: 10px;
@@ -28,20 +33,26 @@ img {
   font-size: 20px;
 }
 
-.title {
+.title, .home_title {
   padding-right: 20%;
   font-size: 50px;
   text-align: center;
   font-family: Snell Roundhand, cursive;
   font-weight: 900;
-  color: white;
+  color: orange;
   margin: 0;
+  
+}
+
+.home_title {
+  padding-left: 20%;
+  padding-bottom: 5%;
+  font-size: 100px;
 }
 
 .active {
   color: black;
   margin: 0 auto;
-  padding: 10px;
   background-color: #4CAF50; /* Green */
   border: none;
   border-radius: 8px;
@@ -58,14 +69,18 @@ img {
 .home_p {
   font-size: 30px;
 }
+.share_p {
+  font-size: 70%;
+}
 
 ul {
   list-style-type: none;
   margin: 0;
   padding: 0;
   overflow: hidden;
-  background-color: #333;
+  background-color: white;
   width: 100%;
+  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
 }
 
 li {
@@ -73,7 +88,7 @@ li {
   cursor: pointer;
   position: relative;
   border: none;
-  border-radius: 4px;
+  /* border-radius: 50px; */
   text-align: center;
   -webkit-transition-duration: 0.4s; /* Safari */
   transition-duration: 0.4s;
@@ -83,15 +98,18 @@ li {
 
 li a {
   display: block;
-  color: white;
+  color: orange;
   text-align: center;
   padding: 30px 40px;
   text-decoration: none;
-  
 }
 
 li a:hover:not(.active) {
-  background-color: #111;
+  /* background-color: orange; */
+  color:orange;
+  border-color: orange;
+  border-bottom: solid;
+  border-radius: 1px;
 }
 
 li :after {
@@ -119,21 +137,34 @@ li:last-child {
 }
 
 .active2 {
-  background-color: #4CAF50;
+  text-decoration-color: orange;
+  border-color: orange;
+  border-bottom: solid;
+  border-radius: 1px;
 }
 
 .inputDiv {
   margin-left: auto;
   margin-right: auto;
-  border-radius: 5px;
-  background-color: #f2f2f2;
+  margin-top: 11%;
+  border-radius: 20px;
+  background-color: white;
   padding: 80px;
   width: 50%;
+  border-style: dotted;
+  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+
 }
+.inputDiv_title {
+  font-size: 40px;
+  margin-top: -40px;
+}
+
 
 .chat {
   margin-left: auto;
   margin-right: auto;
+  margin-top: 5%;
   border-radius: 5px;
   background-color: #f2f2f2;
   padding: 80px;
@@ -150,7 +181,7 @@ li:last-child {
 }
 
 input[type=text] {
-  width: 100%;
+  width: 78%;
   box-sizing: border-box;
   border: 2px solid #ccc;
   border-radius: 4px;
@@ -162,11 +193,24 @@ input[type=text] {
   padding: 12px 20px 12px 40px;
 }
 
-.homeBtn {
+input[type=file] {
+  color:red;
+}
+
+.cstm_input, .cstm_inputS {
+  width: 30% !important;
+  /* margin-top: 11%; */
+}
+.cstm_inputS {
+  margin-top: 11%;
+}
+
+
+.homeBtn, .cstm_Btn, .cstm_BtnS  {
   width: 20%;
-  background-color: #4CAF50;
+  background-color: orange;
   color: white;
-  padding: 14px 20px;
+  padding: 9px 20px;
   margin: 8px 0;
   border: none;
   border-radius: 4px;
@@ -181,26 +225,84 @@ input[type=text] {
   overflow: hidden;
 }
 
-.homeBtn:hover {
-  background-color: #45a049;
+.cstm_Btn, .cstm_BtnS {
+  width: 10%
 }
 
-.homeBtn:after {
-  content: "";
-  background: #f1f1f1;
-  display: block;
-  position: absolute;
-  padding-top: 300%;
-  padding-left: 350%;
-  margin-left: -20px !important;
-  margin-top: -120%;
-  opacity: 0;
-  transition: all 0.8s
+.row {
+  display: -ms-flexbox; /* IE10 */
+  display: flex;
+  -ms-flex-wrap: wrap; /* IE10 */
+  flex-wrap: wrap;
+  padding: 0 4px;
 }
 
-.homeBtn:active:after {
-  padding: 0;
-  margin: 0;
-  opacity: 1;
-  transition: 0s
+/* Create four equal columns that sits next to each other */
+.column {
+  -ms-flex: 25%; /* IE10 */
+  flex: 25%;
+  max-width: 25%;
+  padding: 0 4px;
+}
+
+.column img {
+  margin-top: 8px;
+  vertical-align: middle;
+  width: 100%;
+}
+
+/* Responsive layout - makes a two column-layout instead of four columns */
+@media screen and (max-width: 800px) {
+  .column {
+    -ms-flex: 50%;
+    flex: 50%;
+    max-width: 50%;
+  }
+}
+
+/* Responsive layout - makes the two columns stack on top of each other instead of next to each other */
+@media screen and (max-width: 600px) {
+  .column {
+    -ms-flex: 100%;
+    flex: 100%;
+    max-width: 100%;
+  }
+  .inputDiv {
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 11%;
+    background-color: white;
+    width: -webkit-fill-available;
+    box-shadow: rgba(0, 0, 0, 0.2) 0px 8px 16px 0px, rgba(0, 0, 0, 0.19) 0px 6px 20px 0px;
+    border-radius: 20px;
+    padding: 80px;
+    border-style: dotted;
+  }
+
+  .title, .home_title {
+    padding-right: 4%;
+    font-size: 50px;
+    text-align: center;
+    font-family: Snell Roundhand, cursive;
+    font-weight: 900;
+    color: orange;
+    margin: 0;
+  }
+
+  .home_title {
+    padding-bottom: 5%;
+    font-size: -webkit-xxx-large;
+    padding-left: 16%;
+  }
+
+  li a {
+    display: block;
+    color: orange;
+    text-align: center;
+    padding: 30px 29px;
+    text-decoration: none;
+  }
+}
+@-ms-viewport{
+  width: device-width;
 }

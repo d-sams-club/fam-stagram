@@ -13,7 +13,9 @@ const app = angular.module('app', ['ngRoute'])
         });
       };
       this.handleJoinFamClick = (code) => {
-        $http.post('/code', { code });
+        $http.post('/code', {
+          code
+        });
         console.log('join code: ', code);
       };
     },
@@ -29,19 +31,66 @@ const app = angular.module('app', ['ngRoute'])
     },
     templateUrl: 'templates/home.html',
   })
+  .component('sharecode', {
+    controller($http) {
+      this.reload = () => {
+        setTimeout(() => {
+          window.location.reload();
+        }, 0);
+      };
+      this.sendEmail = (email) => {
+        $http.post('/sendEmail', {
+          recipientEmail: email,
+        });
+      };
+    },
+    templateUrl: 'templates/shareCode.html',
+  })
+  .component('activities', {
+    controller($http) {
+      this.reload = () => {
+        setTimeout(() => {
+          window.location.reload();
+        }, 0);
+      };
+      this.activities;
+      this.searchActivities = (location) => {
+        $http.get('/getActivities', {
+          params: { location },
+        })
+          .then((data) => {
+            this.activities = data.data;
+            console.log(data.data);
+          })
+          .catch((err) => {
+            console.error(err);
+          });
+      };
+    },
+    templateUrl: 'templates/activities.html',
+  })
   .component('chat', {
     controller($http) {
       this.messages = [];
+      this.famName;
+      this.currentUser;
       this.handleSendClick = (value) => {
         value = value || ' ';
+        $http.get('/currentUser')
+          .then((data) => {
+            this.currentUser = data.data.personId;
+          });
         $http.post('/messages', {
-          userId: 1,
+          userId: this.currentUser,
           text: value,
         }).then(() => {
           $http.get('/messages')
             .then((data) => {
+              console.log(data.data.famName);
+              famName = data.data.famName;
+              console.log('this.famName', this.famName, data);
               const storage = [];
-              data.data.forEach((message) => {
+              data.data.results.forEach((message) => {
                 storage.push(message);
               });
               this.messages = storage;
@@ -56,8 +105,10 @@ const app = angular.module('app', ['ngRoute'])
       this.init = () => {
         $http.get('/messages')
           .then((data) => {
+            this.famName = data.data.famName;
             const storage = [];
-            data.data.forEach((message) => {
+            console.log(data);
+            data.data.results.forEach((message) => {
               storage.push(message);
             });
             this.messages = storage;
@@ -68,12 +119,33 @@ const app = angular.module('app', ['ngRoute'])
     templateUrl: 'templates/chat.html',
   })
   .component('photos', {
-    controller() {
+    controller($http) {
+      this.photoLinks = [];
       this.reload = () => {
         setTimeout(() => {
           window.location.reload();
+          $http.get('/photos')
+            .then(({data}) => {
+              this.photos = photos;
+              console.log(photos);
+              photos.forEach((photo) => {
+                console.log(this);
+                this.photoLinks.push(`/photo/${photo.url}`);
+              });
+            });
         }, 0);
       };
+
+      $http.get('/photos')
+        .then(({data: photos}) => {
+          this.photos = photos;
+          console.log(photos);
+          photos.forEach((photo) => {
+            console.log(this);
+            this.photoLinks.push(`/photo/${photo.url}`);
+          });
+        });
+      // httpService.getPictures()
     },
     templateUrl: 'templates/photos.html',
   })
@@ -89,6 +161,12 @@ const app = angular.module('app', ['ngRoute'])
         })
         .when('/user', {
           template: '<loggedin></loggedin>',
+        })
+        .when('/sharecode', {
+          template: '<sharecode></sharecode>',
+        })
+        .when('/activites', {
+          template: '<activities></activities>',
         })
         .when('/', {
           template: '<home></home>',
