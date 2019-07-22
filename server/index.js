@@ -1,9 +1,9 @@
-const multer =require('multer');
+const multer = require('multer');
 // REQUIRED STUFF
 const express = require('express');
 const path = require('path');
 const bodyParser = require('body-parser');
-const fs = require('fs'); 
+const fs = require('fs');
 const http = require('http');
 const session = require('express-session');
 const dotenv = require('dotenv');
@@ -28,8 +28,7 @@ const database = require('../db/index.js');
 //  MIDDLEWARE AND AUTH
 // /////////////////////////////////////////////////////////////////
 /*
-// secret: JACK nut VISA jack music TOKYO 5 APPLE MUSIC BESTBUY VISA xbox 6 7 3 7 6 visa 3 COFFEE ROPE BESTBUY queen apple nut TOKYO hulu skype KOREAN
-// 7 queen XBOX tokyo TOKYO hulu music bestbuy bestbuy golf ROPE XBOX ROPE korean LAPTOP golf USA apple usa
+
 */
 const sess = {
   secret: 'JnVjmT5AMBVx67376v3CRBqanThsK7qXtThmbbgRXRkLgUau',
@@ -48,10 +47,12 @@ app.use(passport.session());
 
 
 
+
 app.use(bodyParser.urlencoded({
   extended: true,
 }));
 app.use(express.static(`${__dirname}/../client/`));
+app.use(express.static(`${__dirname}/../client/templates`));
 app.use(bodyParser.json());
 app.use(userInViews());
 app.use('/', authRouter);
@@ -74,27 +75,39 @@ const handleError = (err, res) => {
     .end("Oops! Something went wrong!");
 };
 
+let picNumber = 0;
 // the home page with the join family, create family, and logout
 app.get('/', (req, res) => {
   res.render('index');
 });
 
-app.post('/pictures', upload.single("file"),(req, res) => {
+app.post('/photos', upload.single("file"), (req, res) => {
   console.log(req);
   const tempPath = req.file.path;
-  const targetPath = path.join(__dirname, `/pictures/${req.file.originalname}`);
+  const targetPath = path.join(__dirname, `/pictures/${picNumber}.png`);
 
   if (path.extname(req.file.originalname).toLowerCase() === ".png") {
     fs.rename(tempPath, targetPath, err => {
-      if (err){ 
+      if (err) {
         console.log(err);
         return handleError(err, res);
       }
 
-      fs.appendFile(`${__dirname}/pictures/order.txt`, `${req.file.originalname}\n`)
-      res.status(200)
-        .contentType("text/plain")
-        .end("File uploaded!");
+      fs.appendFile(`${__dirname}/pictures/order.txt`, `${picNumber}\n`)
+      db.savePhoto({
+          name: picNumber,
+          code: currentCode
+        })
+        .then(() => {
+          // res.statusCode = 200;
+          res.redirect('/#!/photos');
+          picNumber += 1;
+        })
+        .catch((err) => {
+          console.log(err);
+          res.redirect('/#!/photos');
+        });
+
     });
   } else {
     fs.unlink(tempPath, err => {
@@ -103,12 +116,27 @@ app.post('/pictures', upload.single("file"),(req, res) => {
         return handleError(err, res);
       }
 
-      res.status(403)
-        .contentType("text/plain")
-        .end("Only .png files are allowed!");
+      res.statusCode = 403;
+      res.end("Only .png files are allowed!");
     });
   }
 });
+
+app.get('/photos', (req, res) => {
+  db.getPhotos(currentCode)
+    .then((photos) => {
+      console.log(photos);
+      res.send(photos);
+    })
+});
+
+app.get('/photo/:id', (req, res) => {
+  res.sendFile(path.join(__dirname, `./pictures/${req.params.id}.png`));
+})
+
+app.get('/photo', (req, res) => {
+  console.log(req.params)
+})
 
 // the 'auth' page, where the login and signup will be
 // app.get('/login', (req, res) => {
@@ -136,9 +164,9 @@ app.post('/fam', (req, res) => {
   const famName = req.body.name;
   currentFam = famName;
   database.saveFamily({
-    name: famName,
-    code: currentCode,
-  })
+      name: famName,
+      code: currentCode,
+    })
     .then(() => {
       res.statusCode = 200;
       res.end();
@@ -184,7 +212,9 @@ app.get('/messages', (req, res) => {
     .catch((err) => {
       // an err here just means the current fam has no messages so roomName wont show
       res.send({
-        results: [[]],
+        results: [
+          []
+        ],
         famName: currentFam,
       });
     });
