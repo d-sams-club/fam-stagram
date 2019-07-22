@@ -10,7 +10,7 @@ const strategy = new Auth0Strategy(
     clientID: process.env.AUTH0_CLIENT_ID,
     clientSecret: process.env.AUTH0_CLIENT_SECRET,
     callbackURL:
-    `http://${process.env.HOST}:3000/user`,  
+   `http://${process.env.HOST}:3000/callback`,  
   },
   ((accessToken, refreshToken, extraParams, profile, done) => done(null, profile)
   ),
