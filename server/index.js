@@ -8,12 +8,15 @@ const http = require('http');
 const session = require('express-session');
 const dotenv = require('dotenv');
 const sgMail = require('@sendgrid/mail');
+const http = require('http');
+const axios = require('axios');
 const db = require('../db/index');
 const userInViews = require('./middleware/userInViews');
 const authRouter = require('./routes/auth');
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
 const passport = require('./middleware/passport');
+
 sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
 
@@ -240,7 +243,28 @@ app.get('/currentUser', (req, res) => {
     });
   res.statusCode = 200;
 });
-  
+
+app.get('/getActivities', (req, res) => {
+  const AuthStr = 'Bearer '.concat(process.env.YELP);
+  console.log(AuthStr, req.query.location);
+  axios.get('https://api.yelp.com/v3/businesses/search', {
+    headers: { Authorization: AuthStr },
+    params: {
+      location: req.query.location,
+      term: 'Active Life',
+    },
+  })
+    .then((response) => {
+      res.statusCode = 200;
+      console.log(response);
+      res.send(response.data.businesses);
+    })
+    .catch((error) => {
+      console.error(error);
+      res.end();
+    });
+});
+
 app.post('/sendEmail', (req, res) => {
   const msg = {
     to: req.body.recipientEmail,
