@@ -44,6 +44,29 @@ const app = angular.module('app', ['ngRoute'])
     },
     templateUrl: 'templates/shareCode.html',
   })
+  .component('activities', {
+    controller($http) {
+      this.reload = () => {
+        setTimeout(() => {
+          window.location.reload();
+        }, 0);
+      };
+      this.activities;
+      this.searchActivities = (location) => {
+        $http.get('/getActivities', {
+          params: { location },
+        })
+          .then((data) => {
+            this.activities = data.data;
+            console.log(data.data);
+          })
+          .catch((err) => {
+            console.error(err);
+          });
+      };
+    },
+    templateUrl: 'templates/activities.html',
+  })
   .component('chat', {
     controller($http) {
       this.messages = [];
@@ -118,6 +141,9 @@ const app = angular.module('app', ['ngRoute'])
         })
         .when('/sharecode', {
           template: '<sharecode></sharecode>',
+        })
+        .when('/activites', {
+          template: '<activities></activities>',
         })
         .when('/', {
           template: '<home></home>',
