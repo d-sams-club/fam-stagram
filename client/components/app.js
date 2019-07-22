@@ -13,7 +13,9 @@ const app = angular.module('app', ['ngRoute'])
         });
       };
       this.handleJoinFamClick = (code) => {
-        $http.post('/code', { code });
+        $http.post('/code', {
+          code
+        });
         console.log('join code: ', code);
       };
     },
@@ -90,11 +92,31 @@ const app = angular.module('app', ['ngRoute'])
   })
   .component('photos', {
     controller($http) {
+      this.photoLinks = [];
       this.reload = () => {
         setTimeout(() => {
           window.location.reload();
+          $http.get('/photos')
+            .then(({data}) => {
+              this.photos = photos;
+              console.log(photos);
+              photos.forEach((photo) => {
+                console.log(this);
+                this.photoLinks.push(`/photo/${photo.url}`);
+              });
+            });
         }, 0);
       };
+
+      $http.get('/photos')
+        .then(({data: photos}) => {
+          this.photos = photos;
+          console.log(photos);
+          photos.forEach((photo) => {
+            console.log(this);
+            this.photoLinks.push(`/photo/${photo.url}`);
+          });
+        });
       // httpService.getPictures()
     },
     templateUrl: 'templates/photos.html',
