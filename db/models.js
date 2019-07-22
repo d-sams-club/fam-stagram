@@ -107,5 +107,4 @@ const ReactionPhoto = db.define('reactionPhoto', {
   },
 });
 
-
 module.exports = db;
