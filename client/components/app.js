@@ -48,17 +48,22 @@ const app = angular.module('app', ['ngRoute'])
     controller($http) {
       this.messages = [];
       this.famName;
+      this.currentUser;
       this.handleSendClick = (value) => {
         value = value || ' ';
+        $http.get('/currentUser')
+          .then((data) => {
+            this.currentUser = data.data.personId;
+          });
         $http.post('/messages', {
-          userId: 1,
+          userId: this.currentUser,
           text: value,
         }).then(() => {
           $http.get('/messages')
             .then((data) => {
               console.log(data.data.famName);
               famName = data.data.famName;
-              console.log("this.famName", this.famName, data);
+              console.log('this.famName', this.famName, data);
               const storage = [];
               data.data.results.forEach((message) => {
                 storage.push(message);
