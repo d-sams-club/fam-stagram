@@ -1,5 +1,6 @@
 const Sequelize = require('sequelize');
 
+
 const db = new Sequelize('famstagram', 'root', '', {
   host: process.env.HOST || 'localhost',
   dialect: 'mysql',
@@ -10,7 +11,6 @@ const User = db.define('user', {
   id: { type: Sequelize.INTEGER, autoIncrement: true, primaryKey: true },
   name: { type: Sequelize.STRING },
   email: { type: Sequelize.STRING, unqiue: true },
-  // password: { type: Sequelize.STRING },
   createdAt: {
     type: 'TIMESTAMP',
     defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
@@ -105,4 +105,6 @@ const ReactionPhoto = db.define('reactionPhoto', {
     allowNull: false,
   },
 });
+
+
 module.exports = db;
