@@ -10,7 +10,7 @@ const strategy = new Auth0Strategy(
     clientID: process.env.AUTH0_CLIENT_ID,
     clientSecret: process.env.AUTH0_CLIENT_SECRET,
     callbackURL:
-   `http://http://ec2-18-232-67-157.compute-1.amazonaws.com:3000/callback` || `http://${process.env.HOST}:${process.env.PORT}/callback`, 
+   `http://ec2-18-232-67-157.compute-1.amazonaws.com:3000/callback` || `http://${process.env.HOST}:${process.env.PORT}/callback`, 
 
   },
   ((accessToken, refreshToken, extraParams, profile, done) => done(null, profile)
