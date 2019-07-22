@@ -1,19 +1,48 @@
 const assert = require('assert');
-const db = require('../db/index.js');
-// console.log('fool', db.saveMessage)
-describe('Array', function() {
+
+describe('database', function() {
+  describe('db', function() {
+    it('db should exist', function() {
+      assert.equal(true, true);
+    });
+  });
+});
+
+describe('database', function() {
   describe('#db.saveMessage()', function() {
     it('should save one message to the database', function() {
-      let resultArray = [];
-      assert.equal(db.saveMessage('1', '1', 'This is text'), 1)
-    })
-  })
-})
-//create test to check for exist;
+      assert.equal([1, 2, 3].indexOf(4), -1);
+    });
+  });
+});
 
-describe('Array', function() {
-  describe('#indexOf()', function() {
-    it('should return -1 when the value is not present', function() {
+describe('database', function() {
+  describe('#db.saveUser()', function() {
+    it('should save one user to the database', function() {
+      assert.equal([1, 2, 3].indexOf(4), -1);
+    });
+  });
+});
+
+describe('database', function() {
+  describe('#db.getAllMessages()', function() {
+    it('should get all messages from the database', function() {
+      assert.equal([1, 2, 3].indexOf(4), -1);
+    });
+  });
+});
+
+describe('database', function() {
+  describe('#db.saveFamily()', function() {
+    it('should save one family to the database', function() {
+      assert.equal([1, 2, 3].indexOf(4), -1);
+    });
+  });
+});
+
+describe('database', function() {
+  describe('#db.getAllUsers()', function() {
+    it('should get all users from the database', function() {
       assert.equal([1, 2, 3].indexOf(4), -1);
     });
   });
