@@ -4,7 +4,6 @@ const express = require('express');
 const path = require('path');
 const bodyParser = require('body-parser');
 const fs = require('fs');
-const http = require('http');
 const session = require('express-session');
 const dotenv = require('dotenv');
 const sgMail = require('@sendgrid/mail');
