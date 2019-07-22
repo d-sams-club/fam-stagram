@@ -48,8 +48,6 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 
-
-
 app.use(bodyParser.urlencoded({
   extended: true,
 }));
@@ -67,14 +65,14 @@ app.use('/', usersRouter);
 // /////////////////////////////////////////////////////////////////
 
 const upload = multer({
-  dest: __dirname + "/pictures/raw"
+  dest: `${__dirname}/pictures/raw`,
 });
 
 const handleError = (err, res) => {
   res
     .status(500)
-    .contentType("text/plain")
-    .end("Oops! Something went wrong!");
+    .contentType('text/plain')
+    .end('Oops! Something went wrong!');
 };
 
 let picNumber = 0;
@@ -83,23 +81,23 @@ app.get('/', (req, res) => {
   res.render('index');
 });
 
-app.post('/photos', upload.single("file"), (req, res) => {
+app.post('/photos', upload.single('file'), (req, res) => {
   console.log(req);
   const tempPath = req.file.path;
   const targetPath = path.join(__dirname, `/pictures/${picNumber}.png`);
 
-  if (path.extname(req.file.originalname).toLowerCase() === ".png") {
-    fs.rename(tempPath, targetPath, err => {
+  if (path.extname(req.file.originalname).toLowerCase() === '.png') {
+    fs.rename(tempPath, targetPath, (err) => {
       if (err) {
         console.log(err);
         return handleError(err, res);
       }
 
-      fs.appendFile(`${__dirname}/pictures/order.txt`, `${picNumber}\n`)
+      fs.appendFile(`${__dirname}/pictures/order.txt`, `${picNumber}\n`);
       db.savePhoto({
-          name: picNumber,
-          code: currentCode
-        })
+        name: picNumber,
+        code: currentCode,
+      })
         .then(() => {
           // res.statusCode = 200;
           res.redirect('/#!/photos');
@@ -109,17 +107,16 @@ app.post('/photos', upload.single("file"), (req, res) => {
           console.log(err);
           res.redirect('/#!/photos');
         });
-
     });
   } else {
-    fs.unlink(tempPath, err => {
+    fs.unlink(tempPath, (err) => {
       if (err) {
         console.log(err);
         return handleError(err, res);
       }
 
       res.statusCode = 403;
-      res.end("Only .png files are allowed!");
+      res.end('Only .png files are allowed!');
     });
   }
 });
@@ -129,16 +126,16 @@ app.get('/photos', (req, res) => {
     .then((photos) => {
       console.log(photos);
       res.send(photos);
-    })
+    });
 });
 
 app.get('/photo/:id', (req, res) => {
   res.sendFile(path.join(__dirname, `./pictures/${req.params.id}.png`));
-})
+});
 
 app.get('/photo', (req, res) => {
-  console.log(req.params)
-})
+  console.log(req.params);
+});
 
 // the 'auth' page, where the login and signup will be
 // app.get('/login', (req, res) => {
@@ -166,9 +163,9 @@ app.post('/fam', (req, res) => {
   const famName = req.body.name;
   currentFam = famName;
   database.saveFamily({
-      name: famName,
-      code: currentCode,
-    })
+    name: famName,
+    code: currentCode,
+  })
     .then(() => {
       res.statusCode = 200;
       res.end();
@@ -215,7 +212,7 @@ app.get('/messages', (req, res) => {
       // an err here just means the current fam has no messages so roomName wont show
       res.send({
         results: [
-          []
+          [],
         ],
         famName: currentFam,
       });
@@ -251,6 +248,7 @@ app.get('/getActivities', (req, res) => {
     params: {
       location: req.query.location,
       term: 'Active Life',
+      limit: 5,
     },
   })
     .then((response) => {
