@@ -193,6 +193,10 @@ input[type=text] {
   padding: 12px 20px 12px 40px;
 }
 
+input[type=file] {
+  color:red;
+}
+
 .cstm_input, .cstm_inputS {
   width: 30% !important;
   /* margin-top: 11%; */
