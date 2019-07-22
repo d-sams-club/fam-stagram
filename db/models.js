@@ -10,12 +10,8 @@ const db = new Sequelize('famstagram', 'root', '', {
 const User = db.define('user', {
   id: { type: Sequelize.INTEGER, autoIncrement: true, primaryKey: true },
   name: { type: Sequelize.STRING },
-<<<<<<< HEAD
-  email: { type: Sequelize.STRING, unqiue: true },
-=======
   email: { type: Sequelize.STRING },
   // password: { type: Sequelize.STRING },
->>>>>>> c604c96710ba4427b9ee8b4cc27e63e7304c42d1
   createdAt: {
     type: 'TIMESTAMP',
     defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
