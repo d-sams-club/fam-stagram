@@ -5,6 +5,7 @@
     <li><a href="/user"><i class="material-icons">people</i></a></li>
     <li><a href="/#!/chat"><i class="material-icons">chat</i></a></li>
     <li><a class="active2" href="/#!/photos"><i class="material-icons">photo_library</i></a></li>
+    <li><a href="/#!/activites"><i class="material-icons">local_activity</i></a></li>
     <li><a href="/#!/sharecode"><i class="material-icons">share</i></a></li>
     <li style="float:right"><a href="/" ng-click="$ctrl.reload()"><i class="material-icons">exit_to_app</i></a></li>
     <p class="title">Photos</p>
@@ -18,8 +19,8 @@
   </div>
   <br>
   <form method="post" enctype="multipart/form-data" action="/photos">
-    <input type="file" name="file"><br>
-  <input type="submit" value="Post">
+    <input class="cstm_BtnS" type="file" name="file" style="width:400px"><br>
+  <input class="cstm_BtnS" type="submit" value="Post">
   </form>
 
   <div class="row"> 
