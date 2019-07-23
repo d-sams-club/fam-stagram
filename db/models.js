@@ -2,7 +2,7 @@ const Sequelize = require('sequelize');
 
 
 const db = new Sequelize('famstagram', 'root', '', {
-  host: 'ec2-18-232-67-157.compute-1.amazonaws.com',
+  host: 'localhost',
   dialect: 'mysql',
 });
 
