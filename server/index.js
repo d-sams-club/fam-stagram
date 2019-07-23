@@ -1,3 +1,4 @@
+require('dotenv').config();
 const multer = require('multer');
 // REQUIRED STUFF
 const express = require('express');
@@ -5,7 +6,6 @@ const path = require('path');
 const bodyParser = require('body-parser');
 const fs = require('fs');
 const session = require('express-session');
-const dotenv = require('dotenv');
 const sgMail = require('@sendgrid/mail');
 const http = require('http');
 const axios = require('axios');
@@ -20,7 +20,6 @@ sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
 
 const app = express();
-dotenv.config();
 const PORT = 3000;
 const database = require('../db/index.js');
 
