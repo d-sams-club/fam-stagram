@@ -45,6 +45,7 @@ const Message = db.define('message', {
   text: { type: Sequelize.STRING },
   userId: { type: Sequelize.INTEGER, references: { model: 'users', key: 'id' } },
   familyId: { type: Sequelize.INTEGER, references: { model: 'families', key: 'id' } },
+  parentMess: { type: Sequelize.INTEGER },
   createdAt: {
     type: 'TIMESTAMP',
     defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
