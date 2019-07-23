@@ -1,4 +1,4 @@
-
+@import url("http://netdna.bootstrapcdn.com/bootstrap/3.0.0-rc2/css/bootstrap-glyphicons.css");
 
 * {
   box-sizing: border-box;
@@ -37,7 +37,7 @@ img {
   padding-right: 20%;
   font-size: 50px;
   text-align: center;
-  font-family: Snell Roundhand, cursive;
+  font-family: cursive;
   font-weight: 900;
   color: orange;
   margin: 0;
@@ -71,6 +71,26 @@ img {
 }
 .share_p {
   font-size: 70%;
+}
+
+.media-body {
+  padding-left: 20px;
+}
+
+.activities {
+  background: #fff;
+  padding: 8px;
+  border: 0;
+  box-shadow: 0 1px 2px rgba(0,0,0,.1);
+}
+
+.activities-entry {
+  font-size: 16px;
+  padding: 8px;
+}
+
+.activities-entry-name:hover {
+  text-decoration: underline;
 }
 
 ul {
@@ -250,6 +270,7 @@ input[type=file] {
   vertical-align: middle;
   width: 100%;
 }
+
 
 /* Responsive layout - makes a two column-layout instead of four columns */
 @media screen and (max-width: 800px) {
