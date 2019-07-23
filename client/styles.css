@@ -11,12 +11,7 @@ body {
   text-align: center;
   font-size: 20px;
 }
-a {
-  color: white;
-}
-a:hover {
-  color: white;
-}
+
 
 img {
   padding: 10px;
@@ -89,8 +84,18 @@ img {
   padding: 8px;
 }
 
+.activities-entry-name {
+  display: block;
+  color:black;
+  text-align: center;
+  padding: 0px;
+  text-decoration: none;
+}
+
 .activities-entry-name:hover {
   text-decoration: underline;
+  color: black;
+  border-style: none;
 }
 
 ul {
@@ -102,6 +107,11 @@ ul {
   width: 100%;
   box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
 }
+
+a {
+  color: white;
+}
+
 
 li {
   float: left;
