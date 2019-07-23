@@ -71,7 +71,9 @@ const app = angular.module('app', ['ngRoute'])
   })
   .component('chat', {
     controller($http) {
+      this.showThread = false;
       this.messages = [];
+      this.threadMessages = [];
       this.famName;
       this.currentUser;
       this.handleSendClick = (value) => {
@@ -97,6 +99,18 @@ const app = angular.module('app', ['ngRoute'])
             });
         });
       };
+      this.handleThreadClick = ($event) => {
+        this.showThread = true;
+        const fullMess = $event.currentTarget.innerText.split(':');
+        console.log(fullMess);
+        const name = fullMess[0].substring(0, fullMess[0].length - 1); // remove the space at the end
+        const text = fullMess[1].substring(1); // remove space at beginning
+        const clickedMess = {
+          name,
+          text,
+        };
+        this.threadMessages = [clickedMess];
+      };
       this.reload = () => {
         setTimeout(() => {
           window.location.reload();
@@ -118,6 +132,55 @@ const app = angular.module('app', ['ngRoute'])
     },
     templateUrl: 'templates/chat.html',
   })
+  // .component('threads', {
+  //   controller($http) {
+  //     this.messages = [];
+  //     this.famName;
+  //     this.currentUser;
+  //     this.handleSendClick = (value) => {
+  //       value = value || ' ';
+  //       $http.get('/currentUser')
+  //         .then((data) => {
+  //           this.currentUser = data.data.personId;
+  //         });
+  //       $http.post('/messages', {
+  //         userId: this.currentUser,
+  //         text: value,
+  //       }).then(() => {
+  //         $http.get('/messages')
+  //           .then((data) => {
+  //             console.log(data.data.famName);
+  //             famName = data.data.famName;
+  //             console.log('this.famName', this.famName, data);
+  //             const storage = [];
+  //             data.data.results.forEach((message) => {
+  //               storage.push(message);
+  //             });
+  //             this.messages = storage;
+  //           });
+  //       });
+  //     };
+  //     this.reload = () => {
+  //       setTimeout(() => {
+  //         window.location.reload();
+  //       }, 0);
+  //     };
+  //     this.init = () => {
+  //       $http.get('/messages')
+  //         .then((data) => {
+  //           this.famName = data.data.famName;
+  //           const storage = [];
+  //           console.log(data);
+  //           data.data.results.forEach((message) => {
+  //             storage.push(message);
+  //           });
+  //           this.messages = storage;
+  //         });
+  //     };
+  //     this.init();
+  //   },
+  //   templateUrl: 'templates/threads.html',
+  // })
   .component('photos', {
     controller($http) {
       this.photoLinks = [];
@@ -154,7 +217,7 @@ const app = angular.module('app', ['ngRoute'])
       $locationProvider.html5Mode(true);
       $routeProvider
         .when('/chat', {
-          template: '<chat><chat>',
+          template: '<chat></chat>',
         })
         .when('/photos', {
           template: '<photos></photos>',
