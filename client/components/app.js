@@ -109,7 +109,32 @@ const app = angular.module('app', ['ngRoute'])
           name,
           text,
         };
+
         this.threadMessages = [clickedMess];
+      };
+      this.handleThreadSendClick = (threadValue) => {
+        // threadValue = threadValue || ' ';
+        $http.get('/currentUser')
+          .then((data) => {
+            this.currentUser = data.data.personId;
+          });
+        $http.post('/threadmessages', {
+          userId: this.currentUser,
+          text: threadValue,
+          parentText: this.threadMessages[0],
+        }).then(() => {
+          $http.get('/messages')
+            .then((data) => {
+              console.log(data.data.famName);
+              famName = data.data.famName;
+              console.log('this.famName', this.famName, data);
+              const storage = [];
+              data.data.results.forEach((message) => {
+                storage.push(message);
+              });
+              this.messages = storage;
+            });
+        });
       };
       this.reload = () => {
         setTimeout(() => {
@@ -132,55 +157,6 @@ const app = angular.module('app', ['ngRoute'])
     },
     templateUrl: 'templates/chat.html',
   })
-  // .component('threads', {
-  //   controller($http) {
-  //     this.messages = [];
-  //     this.famName;
-  //     this.currentUser;
-  //     this.handleSendClick = (value) => {
-  //       value = value || ' ';
-  //       $http.get('/currentUser')
-  //         .then((data) => {
-  //           this.currentUser = data.data.personId;
-  //         });
-  //       $http.post('/messages', {
-  //         userId: this.currentUser,
-  //         text: value,
-  //       }).then(() => {
-  //         $http.get('/messages')
-  //           .then((data) => {
-  //             console.log(data.data.famName);
-  //             famName = data.data.famName;
-  //             console.log('this.famName', this.famName, data);
-  //             const storage = [];
-  //             data.data.results.forEach((message) => {
-  //               storage.push(message);
-  //             });
-  //             this.messages = storage;
-  //           });
-  //       });
-  //     };
-  //     this.reload = () => {
-  //       setTimeout(() => {
-  //         window.location.reload();
-  //       }, 0);
-  //     };
-  //     this.init = () => {
-  //       $http.get('/messages')
-  //         .then((data) => {
-  //           this.famName = data.data.famName;
-  //           const storage = [];
-  //           console.log(data);
-  //           data.data.results.forEach((message) => {
-  //             storage.push(message);
-  //           });
-  //           this.messages = storage;
-  //         });
-  //     };
-  //     this.init();
-  //   },
-  //   templateUrl: 'templates/threads.html',
-  // })
   .component('photos', {
     controller($http) {
       this.photoLinks = [];
