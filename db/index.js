@@ -16,11 +16,17 @@ const saveMessage = obj => db.models.family.findOne({
   },
 }).then(data => db.query(`insert into messages (userId, familyId, text) values (${obj.userId}, ${data.id}, "${obj.text}");`));
 
+const saveThreadMessage = obj => db.models.family.findOne({
+  where: {
+    code: obj.familyCode,
+  },
+}).then(data => db.query(`insert into messages (userId, familyId, text) values (${obj.userId}, ${data.id}, "${obj.text}");`));
+
 const getAllMessages = obj => db.models.family.findOne({
   where: {
     code: obj.code,
   },
-}).then(data => [db.query(`select users.name, messages.text from users, messages where messages.userId = users.id && messages.familyId = ${data.id}`), data.name]);
+}).then(data => [db.query(`select users.name, messages.text from users, messages where messages.userId = users.id && messages.parentMess IS NULL && messages.familyId = ${data.id}`), data.name]);
 
 const saveFamily = obj => db.models.family.findAll({
   where: {
