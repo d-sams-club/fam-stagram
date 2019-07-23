@@ -266,8 +266,8 @@ app.post('/sendEmail', (req, res) => {
     to: req.body.recipientEmail,
     from: 'FamstagramMail@gmail.com',
     subject: 'Welcome to Famstagram',
-    html: `Your have been invided to join the ${currentFam} family on Famstagram. Your Join Code is <strong>${currentCode}</strong>!
-    <br><br><br> Famstagram - The more intamate Instagram`,
+    html: `Your have been invited to join the ${currentFam} family on Famstagram. Your Join Code is <strong>${currentCode}</strong>!
+    <br><br><br> Famstagram - The more intimate Instagram`,
   };
   sgMail.send(msg);
   res.statusCode = 200;
