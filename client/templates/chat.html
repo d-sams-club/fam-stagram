@@ -15,7 +15,7 @@
 <div class="chat" style="width: 600px; height: 500px; overflow:scroll;">
   <div ng-Repeat="obj in $ctrl.messages" >
     <div> 
-      <ul class="chat_ul"> 
+      <ul class="chat_ul" ng-click="$ctrl.handleThreadClick($event)"> 
         <li>{{obj.name}} : {{obj.text}}</li>
       </ul>
     </div>
@@ -23,3 +23,15 @@
 </div>
 <input class="cstm_input" type="text" placeholder="Send Message.." ng-model="value"> 
 <button class="cstm_Btn" ng-click="$ctrl.handleSendClick(value)">Send  <i class="material-icons">send</i></button>
+
+<div ng-if="$ctrl.showThread" class="threads" style="width: 600px; height: 500px; overflow:scroll;">
+  <div ng-Repeat="obj in $ctrl.threadMessages" >
+    <div> 
+      <ul class="thread_ul" > 
+        <li>{{obj.name}} : {{obj.text}}</li>
+      </ul>
+    </div>
+  </div>
+</div>
+<input ng-if="$ctrl.showThread" class="cstm_input" type="text" placeholder="Send Message.." ng-model="value"> 
+<button ng-if="$ctrl.showThread" class="cstm_Btn" ng-click="$ctrl.handleSendClick(value)">Send  <i class="material-icons">send</i></button>
