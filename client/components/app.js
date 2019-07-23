@@ -14,7 +14,7 @@ const app = angular.module('app', ['ngRoute'])
       };
       this.handleJoinFamClick = (code) => {
         $http.post('/code', {
-          code
+          code,
         });
         console.log('join code: ', code);
       };
@@ -165,7 +165,7 @@ const app = angular.module('app', ['ngRoute'])
         .when('/sharecode', {
           template: '<sharecode></sharecode>',
         })
-        .when('/activites', {
+        .when('/activities', {
           template: '<activities></activities>',
         })
         .when('/', {
