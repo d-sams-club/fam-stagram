@@ -132,8 +132,22 @@ const app = angular.module('app', ['ngRoute'])
           name,
           text,
         };
-
         this.threadMessages = [clickedMess];
+        $http.post('/threadmessages', {
+          parentText: this.threadMessages[0],
+        }).then((res) => {
+          console.log(res);
+          $http.get(`/threadmessages?parentId=${res.data.parentId}`)
+            .then((data) => {
+              famName = data.data.famName;
+              console.log('this.famName', this.famName, data);
+              const storage = [this.threadMessages[0]];
+              data.data.results.forEach((message) => {
+                storage.push(message);
+              });
+              this.threadMessages = storage;
+            });
+        });
       };
       this.handleThreadSendClick = (threadValue) => {
         // threadValue = threadValue || ' ';
@@ -146,18 +160,14 @@ const app = angular.module('app', ['ngRoute'])
           text: threadValue,
           parentText: this.threadMessages[0],
         }).then((res) => {
-          console.log(res);
           $http.get(`/threadmessages?parentId=${res.data.parentId}`)
             .then((data) => {
-              console.log(res);
               famName = data.data.famName;
-              console.log('this.famName', this.famName, data);
               const storage = [this.threadMessages[0]];
               data.data.results.forEach((message) => {
                 storage.push(message);
               });
               this.threadMessages = storage;
-              this.reload();
             });
         });
       };
@@ -171,7 +181,6 @@ const app = angular.module('app', ['ngRoute'])
           .then((data) => {
             this.famName = data.data.famName;
             const storage = [];
-            console.log(data);
             data.data.results.forEach((message) => {
               storage.push(message);
             });
