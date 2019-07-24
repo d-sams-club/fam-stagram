@@ -190,11 +190,70 @@ app.post('/messages', (req, res) => {
     });
 });
 
+app.post('/threadmessages', (req, res) => {
+  req.body.familyCode = currentCode;
+  const { familyCode, text, userId } = req.body;
+  // use req.body.parentText to get the parent id
+  // const parentName = req.body.parentText.name;
+  const parentText = req.body.parentText.text;
+  const obj = {
+    code: currentCode,
+    parentText,
+  };
+  database.getParentMessage(obj)
+    .then((data) => {
+      data[0].then(([results, metadata]) => {
+        const message = {
+          familyCode,
+          text,
+          parentMess: results[0].id,
+          userId,
+        };
+        database.saveMessage(message)
+          .then(() => {
+            res.sendStatus(200);
+          })
+          .catch((error) => {
+            console.error(error);
+            res.sendStatus(404);
+          });
+      });
+    });
+});
+
 app.get('/messages', (req, res) => {
   const obj = {
     code: currentCode,
   };
   database.getAllMessages(obj)
+    .then((data) => {
+      res.statusCode = 200;
+      const promise = data[0];
+      currentFam = data[1];
+      promise.then(([results, metadata]) => {
+        res.statusCode = 200;
+        res.send({
+          results,
+          famName: currentFam,
+        });
+      });
+    })
+    .catch((err) => {
+      // an err here just means the current fam has no messages so roomName wont show
+      res.send({
+        results: [
+          [],
+        ],
+        famName: currentFam,
+      });
+    });
+});
+
+app.get('/threadmessages', (req, res) => {
+  const obj = {
+    code: currentCode,
+  };
+  database.getThreadMessages(obj)
     .then((data) => {
       res.statusCode = 200;
       const promise = data[0];
