@@ -16,11 +16,11 @@ const saveMessage = obj => db.models.family.findOne({
   },
 }).then(data => db.query(`insert into messages (userId, familyId, parentMess, text) values (${obj.userId}, ${data.id}, ${obj.parentMess || null}, "${obj.text}");`));
 
-const saveThreadMessage = obj => db.models.family.findOne({
-  where: {
-    code: obj.familyCode,
-  },
-}).then(data => db.query(`insert into messages (userId, familyId, text) values (${obj.userId}, ${data.id}, "${obj.text}");`));
+// const saveThreadMessage = obj => db.models.family.findOne({
+//   where: {
+//     code: obj.familyCode,
+//   },
+// }).then(data => db.query(`insert into messages (userId, familyId, text) values (${obj.userId}, ${data.id}, "${obj.text}");`));
 
 const getAllMessages = obj => db.models.family.findOne({
   where: {
@@ -69,3 +69,4 @@ module.exports.getAllMessages = getAllMessages;
 module.exports.savePhoto = savePhoto;
 module.exports.getPhotos = getPhotos;
 module.exports.getParentMessage = getParentMessage;
+module.exports.getThreadMessages = getThreadMessages;
