@@ -145,17 +145,19 @@ const app = angular.module('app', ['ngRoute'])
           userId: this.currentUser,
           text: threadValue,
           parentText: this.threadMessages[0],
-        }).then(() => {
-          $http.get('/messages')
+        }).then((res) => {
+          console.log(res);
+          $http.get(`/threadmessages?parentId=${res.data.parentId}`)
             .then((data) => {
-              console.log(data.data.famName);
+              console.log(res);
               famName = data.data.famName;
               console.log('this.famName', this.famName, data);
-              const storage = [];
+              const storage = [this.threadMessages[0]];
               data.data.results.forEach((message) => {
                 storage.push(message);
               });
-              this.messages = storage;
+              this.threadMessages = storage;
+              this.reload();
             });
         });
       };
