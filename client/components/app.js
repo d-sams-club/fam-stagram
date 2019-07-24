@@ -111,9 +111,7 @@ const app = angular.module('app', ['ngRoute'])
         }).then(() => {
           $http.get('/messages')
             .then((data) => {
-              console.log(data.data.famName);
               famName = data.data.famName;
-              console.log('this.famName', this.famName, data);
               const storage = [];
               data.data.results.forEach((message) => {
                 storage.push(message);
