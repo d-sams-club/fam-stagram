@@ -110,7 +110,7 @@ const ReactionPhoto = db.define('reactionPhoto', {
 
 const Events = db.define('events', {
   id: { type: Sequelize.INTEGER, autoIncrement: true, primaryKey: true },
-  title: { type: Sequelize.String, allowNull: false },
+  title: { type: Sequelize.STRING, allowNull: false },
   description: { type: Sequelize.STRING },
   startAt: { type: Sequelize.DATE, allowNull: false },
   endAt: { type: Sequelize.DATE },
