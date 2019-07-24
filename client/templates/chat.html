@@ -33,6 +33,8 @@
       </ul>
     </div>
   </div>
+  <div class="inputs">
+    <input  class="cstm_input" type="text" placeholder="Send Message.." ng-model="string"> 
+    <button class="cstm_Btn" ng-click="$ctrl.handleThreadSendClick(string)">Send  <i class="material-icons">send</i></button>
+  </div>
 </div>
-<input ng-if="$ctrl.showThread" class="cstm_input" type="text" placeholder="Send Message.." ng-model="value"> 
-<button ng-if="$ctrl.showThread" class="cstm_Btn" ng-click="$ctrl.handleSendClick(value)">Send  <i class="material-icons">send</i></button>

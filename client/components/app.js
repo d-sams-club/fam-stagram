@@ -133,6 +133,43 @@ const app = angular.module('app', ['ngRoute'])
           text,
         };
         this.threadMessages = [clickedMess];
+        $http.post('/threadmessages', {
+          parentText: this.threadMessages[0],
+        }).then((res) => {
+          console.log(res);
+          $http.get(`/threadmessages?parentId=${res.data.parentId}`)
+            .then((data) => {
+              famName = data.data.famName;
+              console.log('this.famName', this.famName, data);
+              const storage = [this.threadMessages[0]];
+              data.data.results.forEach((message) => {
+                storage.push(message);
+              });
+              this.threadMessages = storage;
+            });
+        });
+      };
+      this.handleThreadSendClick = (threadValue) => {
+        // threadValue = threadValue || ' ';
+        $http.get('/currentUser')
+          .then((data) => {
+            this.currentUser = data.data.personId;
+          });
+        $http.post('/threadmessages', {
+          userId: this.currentUser,
+          text: threadValue,
+          parentText: this.threadMessages[0],
+        }).then((res) => {
+          $http.get(`/threadmessages?parentId=${res.data.parentId}`)
+            .then((data) => {
+              famName = data.data.famName;
+              const storage = [this.threadMessages[0]];
+              data.data.results.forEach((message) => {
+                storage.push(message);
+              });
+              this.threadMessages = storage;
+            });
+        });
       };
       this.reload = () => {
         setTimeout(() => {
@@ -144,7 +181,6 @@ const app = angular.module('app', ['ngRoute'])
           .then((data) => {
             this.famName = data.data.famName;
             const storage = [];
-            console.log(data);
             data.data.results.forEach((message) => {
               storage.push(message);
             });
@@ -155,55 +191,6 @@ const app = angular.module('app', ['ngRoute'])
     },
     templateUrl: 'templates/chat.html',
   })
-  // .component('threads', {
-  //   controller($http) {
-  //     this.messages = [];
-  //     this.famName;
-  //     this.currentUser;
-  //     this.handleSendClick = (value) => {
-  //       value = value || ' ';
-  //       $http.get('/currentUser')
-  //         .then((data) => {
-  //           this.currentUser = data.data.personId;
-  //         });
-  //       $http.post('/messages', {
-  //         userId: this.currentUser,
-  //         text: value,
-  //       }).then(() => {
-  //         $http.get('/messages')
-  //           .then((data) => {
-  //             console.log(data.data.famName);
-  //             famName = data.data.famName;
-  //             console.log('this.famName', this.famName, data);
-  //             const storage = [];
-  //             data.data.results.forEach((message) => {
-  //               storage.push(message);
-  //             });
-  //             this.messages = storage;
-  //           });
-  //       });
-  //     };
-  //     this.reload = () => {
-  //       setTimeout(() => {
-  //         window.location.reload();
-  //       }, 0);
-  //     };
-  //     this.init = () => {
-  //       $http.get('/messages')
-  //         .then((data) => {
-  //           this.famName = data.data.famName;
-  //           const storage = [];
-  //           console.log(data);
-  //           data.data.results.forEach((message) => {
-  //             storage.push(message);
-  //           });
-  //           this.messages = storage;
-  //         });
-  //     };
-  //     this.init();
-  //   },
-  //   templateUrl: 'templates/threads.html',
-  // })
   .component('photos', {
     controller($http) {
       this.photoLinks = [];
