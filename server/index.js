@@ -209,15 +209,19 @@ app.post('/threadmessages', (req, res) => {
           parentMess: results[0].id,
           userId,
         };
-        database.saveMessage(message)
-          .then(() => {
-            res.status(200);
-            res.json({ parentId: results[0].id });
-          })
-          .catch((error) => {
-            console.error(error);
-            res.sendStatus(404);
-          });
+        if (message.text) {
+          database.saveMessage(message)
+            .then(() => {
+              res.status(200);
+              res.json({ parentId: results[0].id });
+            })
+            .catch((error) => {
+              console.error(error);
+              res.sendStatus(404);
+            });
+        } else {
+          res.json({ parentId: results[0].id });
+        }
       });
     });
 });
