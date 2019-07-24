@@ -60,6 +60,14 @@ const getPhotos = code => db.models.photo.findAll({
   },
 });
 
+
+const saveChatPhotos = obj => db.models.family.findOne({
+  where: {
+    code: obj.familyCode,
+  },
+}).then(data => db.query(`insert into messages (imageUrl, familyId) values ("${obj.name}", ${data.id})`));
+
+
 module.exports.db = db;
 module.exports.saveUser = saveUser;
 module.exports.saveFamily = saveFamily;
@@ -70,3 +78,4 @@ module.exports.savePhoto = savePhoto;
 module.exports.getPhotos = getPhotos;
 module.exports.getParentMessage = getParentMessage;
 module.exports.getThreadMessages = getThreadMessages;
+module.exports.saveChatPhotos = saveChatPhotos;
