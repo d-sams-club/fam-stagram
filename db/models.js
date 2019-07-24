@@ -108,4 +108,25 @@ const ReactionPhoto = db.define('reactionPhoto', {
   },
 });
 
+const Events = db.define('events', {
+  id: { type: Sequelize.INTEGER, autoIncrement: true, primaryKey: true },
+  title: { type: Sequelize.String, allowNull: false },
+  description: { type: Sequelize.STRING },
+  startAt: { type: Sequelize.DATE, allowNull: false },
+  endAt: { type: Sequelize.DATE },
+  isFullDay: { type: Sequelize.BOOLEAN },
+  userId: { type: Sequelize.INTEGER, references: { model: 'users', key: 'id' } },
+  familyId: { type: Sequelize.INTEGER, references: { model: 'families', key: 'id' } },
+  createdAt: {
+    type: 'TIMESTAMP',
+    defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
+    allowNull: false,
+  },
+  updatedAt: {
+    type: 'TIMESTAMP',
+    defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
+    allowNull: false,
+  },
+});
+
 module.exports = db;
