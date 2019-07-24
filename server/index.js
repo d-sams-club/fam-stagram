@@ -211,7 +211,8 @@ app.post('/threadmessages', (req, res) => {
         };
         database.saveMessage(message)
           .then(() => {
-            res.sendStatus(200);
+            res.status(200);
+            res.json({ parentId: results[0].id });
           })
           .catch((error) => {
             console.error(error);
@@ -251,6 +252,7 @@ app.get('/messages', (req, res) => {
 
 app.get('/threadmessages', (req, res) => {
   const obj = {
+    parentId: req.query.parentId,
     code: currentCode,
   };
   database.getThreadMessages(obj)
