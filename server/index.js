@@ -421,6 +421,31 @@ app.post('/sendEmail', (req, res) => {
   res.end();
 });
 
+app.post('/sendEmail/event', (req, res) => {
+  database.getUsersEmails()
+    .then((emails) => {
+      const noDuplicates = [];
+      for (let i = 0; i < emails[0].length; i++) {
+        if (!noDuplicates.includes(emails[0][i].email)) {
+          noDuplicates.push(emails[0][i].email);
+        }
+      }
+      noDuplicates.forEach((email) => {
+        const msg = {
+          to: email,
+          from: 'FamstagramMail@gmail.com',
+          subject: 'Event added to your Famstagram calendar',
+          html: `The ${currentFam} family has a new event on the calendar!
+          <br><br><br> Famstagram - The more intimate Instagram`,
+        };
+        sgMail.send(msg);
+      });
+      res.statusCode = 200;
+      res.end();
+    })
+    .catch(err => console.error(err));
+});
+
 app.listen(PORT, () => {
   console.log(`app listening on ${PORT}!`);
 });
