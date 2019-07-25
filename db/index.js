@@ -60,6 +60,20 @@ const getPhotos = code => db.models.photo.findAll({
   },
 });
 
+const saveEvent = obj => db.models.family.findOne({
+  where: {
+    code: obj.familyCode,
+  },
+}).then(data => db.query(`insert into events (familyId, text, start_date, end_date) values (${data.id}, "${obj.text}", "${obj.start_date}", "${obj.end_date || null}");`));
+
+// const getEvents = obj => db.models.family.findOne({
+//   where: {
+//     code: obj.code,
+//   },
+// }).then(data => db.query(`select * FROM events where events.familyId = ${data.id}`));
+
+const getEvents = () => db.models.events.findAll();
+
 module.exports.db = db;
 module.exports.saveUser = saveUser;
 module.exports.saveFamily = saveFamily;
@@ -70,3 +84,5 @@ module.exports.savePhoto = savePhoto;
 module.exports.getPhotos = getPhotos;
 module.exports.getParentMessage = getParentMessage;
 module.exports.getThreadMessages = getThreadMessages;
+module.exports.saveEvent = saveEvent;
+module.exports.getEvents = getEvents;
