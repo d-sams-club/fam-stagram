@@ -17,25 +17,36 @@
   </div>
 
   <div>
-      <div> 
-        <ul class="activities" ng-Repeat="obj in $ctrl.activities"> 
-          <div class="activities-entry media">
-            <div class="media-left">
-              <img class="media-object" ng-src="{{obj.image_url}}" 
-              style="width:120px; height:90px" />
-            </div>
-            <div>
-              <div class="activities-entry-name" style="color: black;font-weight:bold">
-                  <a ng-href="{{obj.url}}" style="color: black">{{obj.name}}</a>
+    <!-- adds container for activities to unify styling-->
+      <div class="activities"> 
+        <ul class="activities-list" ng-Repeat="obj in $ctrl.activities"> 
+          <div class="row align-items-center">
+            <div class="col-2"></div>
+            <div class="col">
+            <div class="activities-entry media">
+              <div class="media-left">
+                <img class="media-object" ng-src="{{obj.image_url}}" 
+                style="width:120px; height:90px" />
               </div>
-              <div class="activities-entry-rating">
-                  Rating: {{obj.rating}} </br>
-                  Location: {{obj.location.display_address[0]}}
+              <div>
+                <div class="activities-entry-name" style="color: black;font-weight:bold">
+                    <a ng-href="{{obj.url}}" style="color: black">{{obj.name}}</a>
+                </div>
+                <div class="activities-entry-rating">
+                    Rating: {{obj.rating}} </br>
+                    Location: {{obj.location.display_address[0]}}
+                </div>
               </div>
             </div>
+            </div>
+            <!-- Creates Button for adding events to the database -->
+              <div class="col">
+                <button class="img_btn" ng-click="$ctrl.addEvents()">Add Event</button>
+              </div>
           </div>
         </ul>
-      </div>
+
+    </div>
     </div>
   
   <p>Search for things to do in your families area!</p>
