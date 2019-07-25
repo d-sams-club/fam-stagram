@@ -137,7 +137,6 @@ app.get('/photo', (req, res) => {
 });
 
 
-
 // the 'auth' page, where the login and signup will be
 // app.get('/login', (req, res) => {
 //   // once front end people give me a file for the signin/signup page i will be able to render it
@@ -197,10 +196,11 @@ app.post('/threadmessages', (req, res) => {
   const { familyCode, text, userId } = req.body;
   // use req.body.parentText to get the parent id
   // const parentName = req.body.parentText.name;
-  const parentText = req.body.parentText.text;
+  const { parentText } = req.body;
   const obj = {
     code: currentCode,
-    parentText,
+    parentText: parentText.text,
+    imageUrl: parentText.imageUrl,
   };
   database.getParentMessage(obj)
     .then((data) => {
@@ -209,7 +209,8 @@ app.post('/threadmessages', (req, res) => {
           familyCode,
           text,
           parentMess: results[0].id,
-          userId,
+          imageUrl: results[0].imageUrl,
+          userId: results[0].userId,
         };
         if (message.text) {
           database.saveMessage(message)
@@ -265,6 +266,7 @@ app.post('/chatphotos', upload.single('file'), (req, res) => {
   const tempPath = req.file.path;
   const targetPath = path.join(__dirname, `/pictures/${picNumber}.png`);
 
+
   if (path.extname(req.file.originalname).toLowerCase() === '.png') {
     fs.rename(tempPath, targetPath, (err) => {
       if (err) {
@@ -273,18 +275,24 @@ app.post('/chatphotos', upload.single('file'), (req, res) => {
       }
 
       fs.appendFile(`${__dirname}/pictures/order.txt`, `${picNumber}\n`);
-      db.saveChatPhotos({
-        name: picNumber,
-        familyCode: currentCode,
-      })
-        .then(() => {
-          // res.statusCode = 200;
-          // res.redirect('/#!/photos');
-          picNumber += 1;
-        })
-        .catch((err) => {
-          console.log(err);
-          // res.redirect('/#!/photos');
+      database.getAllUsers()
+        .then((data) => {
+          const latestId = data[0][data[0].length - 1].id;
+          db.saveChatPhotos({
+            name: `/photo/${picNumber}`,
+            text: 'Check out this picture!',
+            familyCode: currentCode,
+            userId: latestId,
+          })
+            .then(() => {
+              // res.statusCode = 200;
+              res.redirect('/#!/chat');
+              picNumber += 1;
+            })
+            .catch((err) => {
+              console.log(err);
+              res.redirect('/#!/chat');
+            });
         });
     });
   } else {
@@ -297,7 +305,7 @@ app.post('/chatphotos', upload.single('file'), (req, res) => {
       res.statusCode = 403;
       res.end('Only .png files are allowed!');
     });
-  } 
+  }
 });
 
 app.get('/messages', (req, res) => {
