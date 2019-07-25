@@ -15,9 +15,19 @@
   
   </div>
 
-  
-  <!-- <div>Search for things to do in your families area!</div>
-  <input class="cstm_inputS" type="text" placeholder="Ex: 'New Orleans, 70119, France'" ng-model="location">
-  <button class="cstm_BtnS" ng-click="$ctrl.searchActivities(location)">Search <i class="material-icons">search</i></button> -->
-  
-  
+  <div class="calendar">
+  <div dhx-scheduler data="events" style="height:400px">
+      <div class="dhx_cal_prev_button">&nbsp;</div>
+      <div class="dhx_cal_next_button">&nbsp;</div>
+      <div class="dhx_cal_today_button"></div>
+      <div class="dhx_cal_date"></div>
+      <div class="dhx_cal_tab" style ="padding: 0px" name="day_tab"></div>
+      <div class="dhx_cal_tab" style ="padding: 0px" name="week_tab"></div>
+      <div class="dhx_cal_tab" style ="padding: 0px" name="month_tab"></div>
+    <!-- Event rendering data needed -->
+        <div dhx-template="event_bar_text">
+            <strong>#{{event.id}}</strong>: {{event.text | uppercase}}
+        </div>
+
+  <div>
+    </div>

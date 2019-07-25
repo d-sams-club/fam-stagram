@@ -111,10 +111,10 @@ const ReactionPhoto = db.define('reactionPhoto', {
 
 const Events = db.define('events', {
   id: { type: Sequelize.INTEGER, autoIncrement: true, primaryKey: true },
-  title: { type: Sequelize.STRING, allowNull: false },
+  text: { type: Sequelize.STRING, allowNull: false },
   description: { type: Sequelize.STRING },
-  startAt: { type: Sequelize.DATE, allowNull: false },
-  endAt: { type: Sequelize.DATE },
+  start_date: { type: Sequelize.DATE, allowNull: false },
+  end_date: { type: Sequelize.DATE },
   isFullDay: { type: Sequelize.BOOLEAN },
   userId: { type: Sequelize.INTEGER, references: { model: 'users', key: 'id' } },
   familyId: { type: Sequelize.INTEGER, references: { model: 'families', key: 'id' } },

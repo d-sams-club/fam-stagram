@@ -70,26 +70,32 @@ const app = angular.module('app', ['ngRoute'])
     templateUrl: 'templates/activities.html',
   })
   .component('events', {
-    controller($http) {
+    controller($scope, $http) {
+      $scope.events = [];
+      // $scope.scheduler = { date: new Date(2019, 7, 1) };
       this.reload = () => {
         setTimeout(() => {
           window.location.reload();
         }, 0);
       };
-      this.activities;
-      this.searchActivities = (location) => {
-        $http.get('/getActivities', {
-          params: { location },
-        })
+      this.init = () => {
+        $http.get('/events')
           .then((data) => {
-            this.activities = data.data;
-            console.log(data.data);
-          })
-          .catch((err) => {
-            console.error(err);
+            $scope.events = [data.data];
+            console.log($scope.events);
           });
       };
+      this.init();
     },
+    // events format must be the following:
+    // $scope.events = [
+    //   {
+    //     id: 1,
+    //     text: 'Task A-12458',
+    //     start_date: new Date(2019, 10, 12),
+    //     end_date: new Date(2019, 10, 16),
+    //   },
+    // ];
     templateUrl: 'templates/events.html',
   })
   .component('chat', {
@@ -196,7 +202,7 @@ const app = angular.module('app', ['ngRoute'])
         setTimeout(() => {
           window.location.reload();
           $http.get('/photos')
-            .then(({data}) => {
+            .then(({ data }) => {
               this.photos = photos;
               console.log(photos);
               photos.forEach((photo) => {
@@ -208,7 +214,7 @@ const app = angular.module('app', ['ngRoute'])
       };
 
       $http.get('/photos')
-        .then(({data: photos}) => {
+        .then(({ data: photos }) => {
           this.photos = photos;
           console.log(photos);
           photos.forEach((photo) => {
