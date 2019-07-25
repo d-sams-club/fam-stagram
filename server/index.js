@@ -226,6 +226,40 @@ app.post('/threadmessages', (req, res) => {
     });
 });
 
+app.get('/events', (re, res) => {
+
+
+  const obj = {
+    code: currentCode,
+  };
+  database.getEvents()
+    .then((data) => { 
+        res.statusCode = 200;
+        res.json(data[0]);
+    })
+    .catch((err) => {
+      // an err here just means the current fam has no messages so roomName wont show
+      res.send({
+        results: [
+          [],
+        ],
+        famName: currentFam,
+      });
+    });
+});
+
+app.post('/events', (req, res) => {
+  req.body.familyCode = currentCode;
+  database.saveEvent(req.body)
+    .then((data) => {
+      res.sendStatus(200);
+    })
+    .catch((error) => {
+      console.error(error);
+      res.sendStatus(404);
+    });
+});
+
 app.get('/messages', (req, res) => {
   const obj = {
     code: currentCode,
