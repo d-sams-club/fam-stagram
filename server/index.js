@@ -196,10 +196,11 @@ app.post('/threadmessages', (req, res) => {
   const { familyCode, text, userId } = req.body;
   // use req.body.parentText to get the parent id
   // const parentName = req.body.parentText.name;
-  const parentText = req.body.parentText.text;
+  const { parentText } = req.body;
   const obj = {
     code: currentCode,
-    parentText,
+    parentText: parentText.text,
+    imageUrl: parentText.imageUrl,
   };
   database.getParentMessage(obj)
     .then((data) => {
@@ -208,7 +209,8 @@ app.post('/threadmessages', (req, res) => {
           familyCode,
           text,
           parentMess: results[0].id,
-          userId,
+          imageUrl: results[0].imageUrl,
+          userId: results[0].userId,
         };
         if (message.text) {
           database.saveMessage(message)
@@ -258,6 +260,7 @@ app.post('/events', (req, res) => {
       res.sendStatus(404);
     });
 });
+
 app.post('/chatphotos', upload.single('file'), (req, res) => {
   console.log(req);
   const tempPath = req.file.path;
@@ -277,6 +280,7 @@ app.post('/chatphotos', upload.single('file'), (req, res) => {
           const latestId = data[0][data[0].length - 1].id;
           db.saveChatPhotos({
             name: `/photo/${picNumber}`,
+            text: 'Check out this picture!',
             familyCode: currentCode,
             userId: latestId,
           })
