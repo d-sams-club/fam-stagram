@@ -54,16 +54,31 @@ const app = angular.module('app', ['ngRoute'])
         }, 0);
       };
       this.activities;
+      this.currentUser;
       this.searchActivities = (location) => {
         $http.get('/getActivities', {
           params: { location },
         })
           .then((data) => {
             this.activities = data.data;
-            console.log(data.data);
           })
           .catch((err) => {
             console.error(err);
+          });
+      };
+      this.addEvents = () => {
+        $http.get('/currentUser')
+          .then((data) => {
+            this.currentUser = data.data.personId;
+            console.log(this.currentUser);
+          }).then(() => {
+            $http.post('/events', {
+              // hardcoded events data for testing
+              userId: this.currentUser,
+              text: 'value',
+              business: 'event',
+              start_date: '2019-08-27',
+            });
           });
       };
     },
@@ -72,7 +87,6 @@ const app = angular.module('app', ['ngRoute'])
   .component('events', {
     controller($scope, $http) {
       $scope.events = [];
-      // $scope.scheduler = { date: new Date(2019, 7, 1) };
       this.reload = () => {
         setTimeout(() => {
           window.location.reload();
@@ -80,11 +94,13 @@ const app = angular.module('app', ['ngRoute'])
       };
       this.init = () => {
         $http.get('/events')
-          .then((data) => {
-            $scope.events = [data.data];
-            console.log($scope.events);
+        // changes data access to work with an array with multiple events
+          .then(({ data }) => {
+            // passes events to template
+            $scope.events = data;
           });
       };
+      // gets events on page init
       this.init();
     },
     // events format must be the following:
