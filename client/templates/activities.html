@@ -1,8 +1,6 @@
 
 <div class="nav">
-
     <ul>
-      <!-- <a href="/user">Join/Create Family</a> -->
       <li><a href="/user"><i class="material-icons">people</i></a></li>
       <li><a href="/#!/chat"><i class="material-icons">chat</i></a></li>
       <li><a href="/#!/photos"><i class="material-icons">photo_library</i></a></li>
@@ -12,11 +10,9 @@
       <li style="float:right"><a href="/" ng-click="$ctrl.reload()"><i class="material-icons">exit_to_app</i></a></li>
           <p class="title">Family Activities</p>
     </ul>
-  
-  
   </div>
 
-  <div>
+  <div class="Page-Content">
     <!-- adds container for activities to unify styling-->
       <div class="activities"> 
         <ul class="activities-list" ng-Repeat="obj in $ctrl.activities"> 
@@ -41,14 +37,12 @@
             </div>
             <!-- Creates Button for adding events to the database -->
               <div class="col">
-                <button class="img_btn" ng-click="$ctrl.addEvents()">Add Event</button>
+                <button class="img_btn" ng-click="$ctrl.addEvents(obj.name, obj.location.display_address[0])">Add Event</button>
               </div>
           </div>
         </ul>
-
     </div>
     </div>
-  
   <p>Search for things to do in your families area!</p>
   <input class="cstm_inputS" type="text" placeholder="Ex: 'New Orleans, 70119, France'" ng-model="location">
   <button class="cstm_BtnS" ng-click="$ctrl.searchActivities(location)">Search <i class="material-icons">search</i></button>

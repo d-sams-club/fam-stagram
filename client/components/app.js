@@ -66,7 +66,7 @@ const app = angular.module('app', ['ngRoute'])
             console.error(err);
           });
       };
-      this.addEvents = () => {
+      this.addEvents = (title, description) => {
         $http.get('/currentUser')
           .then((data) => {
             this.currentUser = data.data.personId;
@@ -75,8 +75,8 @@ const app = angular.module('app', ['ngRoute'])
             $http.post('/events', {
               // hardcoded events data for testing
               userId: this.currentUser,
-              text: 'value',
-              business: 'event',
+              text: title,
+              business: description,
               start_date: '2019-08-27',
             });
           });
