@@ -221,6 +221,8 @@ const app = angular.module('app', ['ngRoute'])
   })
   .component('photos', {
     controller($http) {
+      this.famName;
+      this.messages = [];
       this.photoLinks = [];
       this.reload = () => {
         setTimeout(() => {
@@ -245,6 +247,17 @@ const app = angular.module('app', ['ngRoute'])
             console.log(this);
             this.photoLinks.push(`/photo/${photo.url}`);
           });
+        });
+
+      $http.get('/messages')
+        .then((data) => {
+          this.famName = data.data.famName;
+          const storage = data.data.results.map(message => message.imageUrl);
+          // data.data.results.forEach((message) => {
+          //   storage.push(message);
+          // });
+          console.log(storage, 'connected to chat');
+          this.messages = storage;
         });
       // httpService.getPictures()
     },

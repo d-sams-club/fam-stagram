@@ -17,7 +17,7 @@
   <div ng-Repeat="obj in $ctrl.messages" >
     <div> 
       <ul class="chat_ul" ng-click="$ctrl.handleThreadClick($event)"> 
-        <li>{{obj.name}} : {{obj.text}}<img ng-if="obj.imageUrl" ng-src={{obj.imageUrl}} style="width:400px; height:300px"></li>
+        <li>{{obj.name}} : {{obj.text}}<img ng-hide="{{!obj.imageUrl}}" ng-src={{obj.imageUrl}} style="width:400px; height:300px"></li>
       </ul>
     </div>
   </div>
