@@ -45,7 +45,7 @@ app.directive('dhxTemplate', ['$interpolate', function ($interpolate) {
     link($scope, $element, $attrs, $controller) {
       $element[0].style.display = 'none';
 
-      let htmlTemplate = $interpolate($element.html());
+      const htmlTemplate = $interpolate($element.html());
       scheduler.templates[$attrs.dhxTemplate] = function (start, end, event) {
         return htmlTemplate({ event });
       };

@@ -236,7 +236,7 @@ app.get('/events', (re, res) => {
   database.getEvents()
     .then((data) => {
       res.statusCode = 200;
-      res.json(data[0]);
+      res.json(data);
     })
     .catch((err) => {
       // an err here just means the current fam has no messages so roomName wont show
