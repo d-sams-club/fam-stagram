@@ -19,14 +19,14 @@
     Community Photos.. because were all a family 
   </div>
   <br>
-  <form method="post" enctype="multipart/form-data" action="/photos">
+  <!-- <form method="post" enctype="multipart/form-data" action="/photos">
     <input class="cstm_BtnS" type="file" name="file" style="width:400px"><br>
   <input class="cstm_BtnS" type="submit" value="Post">
-  </form>
+  </form> -->
 
   <div class="row"> 
       <div class="column">
-        <img ng-repeat="photo in $ctrl.photoLinks" ng-src={{photo}}>
+        <img ng-repeat="photo in $ctrl.messages" ng-src={{photo}}>
       </div>
       <!-- <div class="column">
         <img src="https://static1.squarespace.com/static/582a08d48419c24bb272794b/58e2544c9f7456e9887331d8/58e2544d86e6c029f7d56159/1491227730761/2-family-portrait-studio-pose-design-fort-myers-naples.jpg">
