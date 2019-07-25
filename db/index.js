@@ -64,7 +64,7 @@ const saveEvent = obj => db.models.family.findOne({
   where: {
     code: obj.familyCode,
   },
-}).then(data => db.query(`insert into events (familyId, text, start_date, end_date) values (${data.id}, "${obj.text}", "${obj.start_date}", "${obj.end_date || null}");`));
+}).then(data => db.query(`insert into events (text, description, start_date, end_date, userId, familyId) values ("${obj.text}", "${obj.business}", "${obj.start_date}", "${obj.end_date || obj.start_date}", ${obj.userId}, ${data.id});`));
 
 // const getEvents = obj => db.models.family.findOne({
 //   where: {
