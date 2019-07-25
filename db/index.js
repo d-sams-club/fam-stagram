@@ -52,6 +52,8 @@ const saveFamily = obj => db.models.family.findAll({
 
 const getAllUsers = () => db.query('select * from users');
 
+const getUsersEmails = () => db.query('select email from users');
+
 const savePhoto = obj => db.query(`insert into photos (url, family) values ("${obj.name}", "${obj.code}")`);
 
 const getPhotos = code => db.models.photo.findAll({
@@ -94,3 +96,4 @@ module.exports.getThreadMessages = getThreadMessages;
 module.exports.saveEvent = saveEvent;
 module.exports.getEvents = getEvents;
 module.exports.saveChatPhotos = saveChatPhotos;
+module.exports.getUsersEmails = getUsersEmails;
