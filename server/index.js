@@ -136,6 +136,8 @@ app.get('/photo', (req, res) => {
   console.log(req.params);
 });
 
+
+
 // the 'auth' page, where the login and signup will be
 // app.get('/login', (req, res) => {
 //   // once front end people give me a file for the signin/signup page i will be able to render it
@@ -258,6 +260,44 @@ app.post('/events', (req, res) => {
       console.error(error);
       res.sendStatus(404);
     });
+app.post('/chatphotos', upload.single('file'), (req, res) => {
+  console.log(req);
+  const tempPath = req.file.path;
+  const targetPath = path.join(__dirname, `/pictures/${picNumber}.png`);
+
+  if (path.extname(req.file.originalname).toLowerCase() === '.png') {
+    fs.rename(tempPath, targetPath, (err) => {
+      if (err) {
+        console.log(err);
+        return handleError(err, res);
+      }
+
+      fs.appendFile(`${__dirname}/pictures/order.txt`, `${picNumber}\n`);
+      db.saveChatPhotos({
+        name: picNumber,
+        familyCode: currentCode,
+      })
+        .then(() => {
+          // res.statusCode = 200;
+          // res.redirect('/#!/photos');
+          picNumber += 1;
+        })
+        .catch((err) => {
+          console.log(err);
+          // res.redirect('/#!/photos');
+        });
+    });
+  } else {
+    fs.unlink(tempPath, (err) => {
+      if (err) {
+        console.log(err);
+        return handleError(err, res);
+      }
+
+      res.statusCode = 403;
+      res.end('Only .png files are allowed!');
+    });
+  } 
 });
 
 app.get('/messages', (req, res) => {

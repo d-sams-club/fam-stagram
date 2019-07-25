@@ -22,10 +22,13 @@
     </div>
   </div>
 </div>
+<div>
 <input class="cstm_input" type="text" placeholder="Send Message.." ng-model="value"> 
 <button class="cstm_Btn" ng-click="$ctrl.handleSendClick(value)">Send  <i class="material-icons">send</i></button>
+</div>
 
 <div ng-if="$ctrl.showThread" class="threads" style="width: 600px; height: 500px; overflow:scroll;">
+  <h3>Threads</h3>
   <div ng-Repeat="obj in $ctrl.threadMessages" >
     <div> 
       <ul class="thread_ul" > 
@@ -33,8 +36,12 @@
       </ul>
     </div>
   </div>
-  <div class="inputs">
-    <input  class="cstm_input" type="text" placeholder="Send Message.." ng-model="string"> 
-    <button class="cstm_Btn" ng-click="$ctrl.handleThreadSendClick(string)">Send  <i class="material-icons">send</i></button>
-  </div>
 </div>
+<div ng-if="$ctrl.showThread" class="thread_inputs">
+  <input  class="cstm_input" type="text" placeholder="Send Message.." ng-model="string"> 
+  <button class="cstm_Btn" ng-click="$ctrl.handleThreadSendClick(string)">Send  <i class="material-icons">send</i></button>
+</div>
+<form method="post" enctype="multipart/form-data" action="/chatphotos">
+  <input class="img_btn" type="file" name="file" style="width:400px">
+<input class="img_btn" type="submit" value="Add Picture">
+</form>
