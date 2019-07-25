@@ -137,7 +137,6 @@ app.get('/photo', (req, res) => {
 });
 
 
-
 // the 'auth' page, where the login and signup will be
 // app.get('/login', (req, res) => {
 //   // once front end people give me a file for the signin/signup page i will be able to render it
@@ -233,6 +232,7 @@ app.post('/chatphotos', upload.single('file'), (req, res) => {
   const tempPath = req.file.path;
   const targetPath = path.join(__dirname, `/pictures/${picNumber}.png`);
 
+
   if (path.extname(req.file.originalname).toLowerCase() === '.png') {
     fs.rename(tempPath, targetPath, (err) => {
       if (err) {
@@ -241,18 +241,23 @@ app.post('/chatphotos', upload.single('file'), (req, res) => {
       }
 
       fs.appendFile(`${__dirname}/pictures/order.txt`, `${picNumber}\n`);
-      db.saveChatPhotos({
-        name: picNumber,
-        familyCode: currentCode,
-      })
-        .then(() => {
-          // res.statusCode = 200;
-          // res.redirect('/#!/photos');
-          picNumber += 1;
-        })
-        .catch((err) => {
-          console.log(err);
-          // res.redirect('/#!/photos');
+      database.getAllUsers()
+        .then((data) => {
+          const latestId = data[0][data[0].length - 1].id;
+          db.saveChatPhotos({
+            name: picNumber,
+            familyCode: currentCode,
+            userId: latestId,
+          })
+            .then(() => {
+              // res.statusCode = 200;
+              res.redirect('/#!/chat');
+              picNumber += 1;
+            })
+            .catch((err) => {
+              console.log(err);
+              res.redirect('/#!/chat');
+            });
         });
     });
   } else {
@@ -265,7 +270,7 @@ app.post('/chatphotos', upload.single('file'), (req, res) => {
       res.statusCode = 403;
       res.end('Only .png files are allowed!');
     });
-  } 
+  }
 });
 
 app.get('/messages', (req, res) => {
