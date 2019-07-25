@@ -26,7 +26,7 @@ const getAllMessages = obj => db.models.family.findOne({
   where: {
     code: obj.code,
   },
-}).then(data => [db.query(`select users.name, messages.text from users, messages where messages.userId = users.id && messages.parentMess IS NULL && messages.familyId = ${data.id}`), data.name]);
+}).then(data => [db.query(`select users.name, messages.text, messages.imageUrl from users, messages where messages.userId = users.id && messages.parentMess IS NULL && messages.familyId = ${data.id}`), data.name]);
 
 const getParentMessage = obj => db.models.family.findOne({
   where: {
@@ -65,7 +65,7 @@ const saveChatPhotos = obj => db.models.family.findOne({
   where: {
     code: obj.familyCode,
   },
-}).then(data => db.query(`insert into messages (imageUrl, familyId) values ("${obj.name}", ${data.id})`));
+}).then(data => db.query(`insert into messages (userId, imageUrl, familyId) values (${obj.userId}, "${obj.name}", ${data.id})`));
 
 
 module.exports.db = db;
