@@ -107,6 +107,7 @@ const app = angular.module('app', ['ngRoute'])
       this.currentUser;
       this.handleSendClick = (value) => {
         value = value || ' ';
+        this.imageUrl = '';
         $http.get('/currentUser')
           .then((data) => {
             this.currentUser = data.data.personId;
@@ -120,6 +121,9 @@ const app = angular.module('app', ['ngRoute'])
               famName = data.data.famName;
               const storage = [];
               data.data.results.forEach((message) => {
+                if (message.imageUrl === 'undefined') {
+                  message.imageUrl = null;
+                }
                 console.log(message);
                 storage.push(message);
               });
@@ -130,29 +134,48 @@ const app = angular.module('app', ['ngRoute'])
       this.handleThreadClick = ($event) => {
         this.showThread = true;
         const fullMess = $event.currentTarget.innerText.split(':');
-        console.log(fullMess);
+        console.log($event.target.currentSrc);
+        let srcUrl;
+        if ($event.target.currentSrc) {
+          srcUrl = $event.target.currentSrc.substring(7); // cut off http://
+        }
+        let imageUrl;
+        if (srcUrl) {
+          imageUrl = srcUrl.substring(srcUrl.indexOf('/'));
+        }
+        console.log(imageUrl);
         const name = fullMess[0].substring(0, fullMess[0].length - 1); // remove the space at the end
-        const text = fullMess[1].substring(1); // remove space at beginning
-        const clickedMess = {
-          name,
-          text,
-        };
-        this.threadMessages = [clickedMess];
-        $http.post('/threadmessages', {
-          parentText: this.threadMessages[0],
-        }).then((res) => {
-          console.log(res);
-          $http.get(`/threadmessages?parentId=${res.data.parentId}`)
-            .then((data) => {
-              famName = data.data.famName;
-              console.log('this.famName', this.famName, data);
-              const storage = [this.threadMessages[0]];
-              data.data.results.forEach((message) => {
-                storage.push(message);
-              });
-              this.threadMessages = storage;
+        let text;
+        if (fullMess[1]) {
+          text = fullMess[1].substring(1); // remove space at beginning
+        } else {
+          text = 'Check out this picture!';
+        }
+        $http.get('/currentUser')
+          .then((data) => {
+            const clickedMess = {
+              name,
+              text,
+              imageUrl,
+              userId: data.data.personId,
+            };
+            this.threadMessages = [clickedMess];
+            $http.post('/threadmessages', {
+              parentText: clickedMess,
+            }).then((res) => {
+              console.log(res);
+              $http.get(`/threadmessages?parentId=${res.data.parentId}`)
+                .then((data) => {
+                  famName = data.data.famName;
+                  console.log('this.famName', this.famName, data);
+                  const storage = [this.threadMessages[0]];
+                  data.data.results.forEach((message) => {
+                    storage.push(message);
+                  });
+                  this.threadMessages = storage;
+                });
             });
-        });
+          });
       };
       this.handleThreadSendClick = (threadValue) => {
         // threadValue = threadValue || ' ';

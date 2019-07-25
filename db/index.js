@@ -14,7 +14,7 @@ const saveMessage = obj => db.models.family.findOne({
   where: {
     code: obj.familyCode,
   },
-}).then(data => db.query(`insert into messages (userId, familyId, parentMess, text) values (${obj.userId}, ${data.id}, ${obj.parentMess || null}, "${obj.text}");`));
+}).then(data => db.query(`insert into messages (userId, familyId, parentMess, text, imageUrl) values (${obj.userId}, ${data.id}, ${obj.parentMess || null}, "${obj.text}", "undefined");`));
 
 // const saveThreadMessage = obj => db.models.family.findOne({
 //   where: {
@@ -32,7 +32,7 @@ const getParentMessage = obj => db.models.family.findOne({
   where: {
     code: obj.code,
   },
-}).then(data => [db.query(`select messages.id from messages where messages.text = "${obj.parentText}" && messages.familyId = ${data.id}`), data.name]);
+}).then(data => [db.query(`select messages.id, messages.userId, messages.text from messages where messages.familyId = ${data.id} && messages.text = "${obj.parentText}" && messages.imageUrl = "${obj.imageUrl}"  `), data.name]);
 
 const getThreadMessages = obj => db.models.family.findOne({
   where: {
@@ -78,7 +78,7 @@ const saveChatPhotos = obj => db.models.family.findOne({
   where: {
     code: obj.familyCode,
   },
-}).then(data => db.query(`insert into messages (userId, imageUrl, familyId) values (${obj.userId}, "${obj.name}", ${data.id})`));
+}).then(data => db.query(`insert into messages (userId, text, imageUrl, familyId) values (${obj.userId}, "${obj.text}", "${obj.name}", ${data.id})`));
 
 
 module.exports.db = db;
