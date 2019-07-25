@@ -120,6 +120,7 @@ const app = angular.module('app', ['ngRoute'])
               famName = data.data.famName;
               const storage = [];
               data.data.results.forEach((message) => {
+                console.log(message);
                 storage.push(message);
               });
               this.messages = storage;
