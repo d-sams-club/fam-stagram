@@ -37,7 +37,12 @@
             </div>
             <!-- Creates Button for adding events to the database -->
               <div class="col">
+                <div class="form-group">
+                  
+                  <input id="dateOfEvent" name="dateOfEvent" 
+                  type="date" style="width: 175px; margin-right: 8px">
                 <button class="img_btn" ng-click="$ctrl.addEvents(obj.name, obj.location.display_address[0])">Add Event</button>
+              </div>
               </div>
           </div>
         </ul>
