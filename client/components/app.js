@@ -66,7 +66,7 @@ const app = angular.module('app', ['ngRoute'])
             console.error(err);
           });
       };
-      this.addEvents = (title, description) => {
+      this.addEvents = (title, description, link) => {
         $http.get('/currentUser')
           .then((data) => {
             this.currentUser = data.data.personId;
@@ -80,6 +80,11 @@ const app = angular.module('app', ['ngRoute'])
               start_date: '2019-08-27',
             });
           });
+        $http.post('/sendEmail/event', {
+          title,
+          description,
+          link,
+        });
       };
     },
     templateUrl: 'templates/activities.html',
@@ -240,35 +245,40 @@ const app = angular.module('app', ['ngRoute'])
       this.famName;
       this.messages = [];
       this.photoLinks = [];
-      this.reload = () => {
-        setTimeout(() => {
-          window.location.reload();
-          $http.get('/photos')
-            .then(({ data }) => {
-              this.photos = photos;
-              console.log(photos);
-              photos.forEach((photo) => {
-                console.log(this);
-                this.photoLinks.push(`/photo/${photo.url}`);
-              });
-            });
-        }, 0);
-      };
+      // this.reload = () => {
+      //   setTimeout(() => {
+      //     window.location.reload();
+      //     $http.get('/photos')
+      //       .then(({ data }) => {
+      //         this.photos = photos;
+      //         console.log(photos);
+      //         photos.forEach((photo) => {
+      //           console.log(this);
+      //           this.photoLinks.push(`/photo/${photo.url}`);
+      //         });
+      //       });
+      //   }, 0);
+      // };
 
-      $http.get('/photos')
-        .then(({ data: photos }) => {
-          this.photos = photos;
-          console.log(photos);
-          photos.forEach((photo) => {
-            console.log(this);
-            this.photoLinks.push(`/photo/${photo.url}`);
-          });
-        });
+      // $http.get('/photos')
+      //   .then(({ data: photos }) => {
+      //     this.photos = photos;
+      //     console.log(photos);
+      //     photos.forEach((photo) => {
+      //       console.log(this);
+      //       this.photoLinks.push(`/photo/${photo.url}`);
+      //     });
+      //   });
 
       $http.get('/messages')
         .then((data) => {
           this.famName = data.data.famName;
-          const storage = data.data.results.map(message => message.imageUrl);
+          const storage = [];
+          data.data.results.forEach((message) => {
+            if (message.imageUrl !== 'undefined' && message.imageUrl) {
+              storage.push(message.imageUrl);
+            }
+          });
           // data.data.results.forEach((message) => {
           //   storage.push(message);
           // });
