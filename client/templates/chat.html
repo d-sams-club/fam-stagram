@@ -12,37 +12,49 @@
 
   </ul>
 </div>
+<table>
+  <tbody>
+    <tr>
+      <td>
+        <div class="chat" style="width: 600px; height: 500px; overflow:scroll;">
+          <h4>Chatroom</h4>
+          <div ng-Repeat="obj in $ctrl.messages" >
+            <div> 
+              <ul class="chat_ul" ng-click="$ctrl.handleThreadClick($event)"> 
+                <li>{{obj.name}} : {{obj.text}}<img ng-if="obj.imageUrl && obj.imageUrl !== 'undefined'" ng-src={{obj.imageUrl}} ng-click="$ctrl.handleSendClick()" style="width:400px; height:300px"></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div>
+        <input class="cstm_input" type="text" placeholder="Send Message.." ng-model="value"> 
+        <button class="cstm_Btn" ng-click="$ctrl.handleSendClick(value)">Send  <i class="material-icons">send</i></button>
+        </div>
+        
+        <form method="post" enctype="multipart/form-data" action="/chatphotos">
+          <input class="img_btn" type="file" name="file" style="width:400px">
+        <input class="img_btn" type="submit" value="Add Picture">
+        </form>
+      </td>
+      <td>
+        <div ng-if="$ctrl.showThread" class="chat" style="width: 600px; height: 455px; overflow:scroll;">
+          <h4>Send a reply</h4>
+          <div ng-Repeat="obj in $ctrl.threadMessages" >
+            <div> 
+              <ul class="thread_ul" > 
+                <li>{{obj.name}} : {{obj.text}} <img ng-if="obj.imageUrl" ng-src={{obj.imageUrl}} style="width:400px; height:300px"></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div ng-if="$ctrl.showThread" class="thread_inputs">
+          <input  class="cstm_input" type="text" placeholder="Send Message.." ng-model="string"> 
+          <button class="cstm_Btn" ng-click="$ctrl.handleThreadSendClick(string)">Send  <i class="material-icons">send</i></button>
+        </div>
+      </td>
+    </tr>
+  </tbody>
+</table>
 
-<div class="chat" style="width: 600px; height: 500px; overflow:scroll;">
-  <div ng-Repeat="obj in $ctrl.messages" >
-    <div> 
-      <ul class="chat_ul" ng-click="$ctrl.handleThreadClick($event)"> 
-        <li>{{obj.name}} : {{obj.text}}<img ng-if="obj.imageUrl && obj.imageUrl !== 'undefined'" ng-src={{obj.imageUrl}} ng-click="$ctrl.handleSendClick()" style="width:400px; height:300px"></li>
-      </ul>
-    </div>
-  </div>
-</div>
-<div>
-<input class="cstm_input" type="text" placeholder="Send Message.." ng-model="value"> 
-<button class="cstm_Btn" ng-click="$ctrl.handleSendClick(value)">Send  <i class="material-icons">send</i></button>
-</div>
 
-<form method="post" enctype="multipart/form-data" action="/chatphotos">
-  <input class="img_btn" type="file" name="file" style="width:400px">
-<input class="img_btn" type="submit" value="Add Picture">
-</form>
 
-<div ng-if="$ctrl.showThread" class="threads" style="width: 600px; height: 500px; overflow:scroll;">
-  <h3>Threads</h3>
-  <div ng-Repeat="obj in $ctrl.threadMessages" >
-    <div> 
-      <ul class="thread_ul" > 
-        <li>{{obj.name}} : {{obj.text}} <img ng-if="obj.imageUrl" ng-src={{obj.imageUrl}} style="width:400px; height:300px"></li>
-      </ul>
-    </div>
-  </div>
-</div>
-<div ng-if="$ctrl.showThread" class="thread_inputs">
-  <input  class="cstm_input" type="text" placeholder="Send Message.." ng-model="string"> 
-  <button class="cstm_Btn" ng-click="$ctrl.handleThreadSendClick(string)">Send  <i class="material-icons">send</i></button>
-</div>

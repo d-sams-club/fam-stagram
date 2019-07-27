@@ -422,6 +422,7 @@ app.post('/sendEmail', (req, res) => {
 });
 
 app.post('/sendEmail/event', (req, res) => {
+  const { title, description, link } = req.body;
   database.getUsersEmails()
     .then((emails) => {
       const noDuplicates = [];
@@ -435,7 +436,10 @@ app.post('/sendEmail/event', (req, res) => {
           to: email,
           from: 'FamstagramMail@gmail.com',
           subject: 'Event added to your Famstagram calendar',
-          html: `The ${currentFam} family has a new event on the calendar!
+          html: `The ${currentFam} family has a new event on the calendar! Join your family for 
+          ${title}, located at ${description}! <br>
+          For more info on this event: <br>
+          ${link}
           <br><br><br> Famstagram - The more intimate Instagram`,
         };
         sgMail.send(msg);
