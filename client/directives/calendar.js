@@ -1,4 +1,6 @@
-app.directive('dhxScheduler', () => ({
+
+
+angular.module('app').directive('dhxScheduler', () => ({
   restrict: 'A',
   scope: false,
   transclude: true,
